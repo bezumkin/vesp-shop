@@ -7,14 +7,14 @@ class UserRoles extends AbstractSeed
 {
     public function run(): void
     {
-        $roles = [
-            'Administrator' => [
-                'scope' => ['profile', 'users'],
-            ],
-            'User' => [
-                'scope' => ['profile'],
-            ],
-        ];
+$roles = [
+    'Administrator' => [
+        'scope' => ['profile', 'users', 'products'],
+    ],
+    'User' => [
+        'scope' => ['profile'],
+    ],
+];
 
         foreach ($roles as $title => $data) {
             if (!$group = UserRole::query()->where('title', $title)->first()) {

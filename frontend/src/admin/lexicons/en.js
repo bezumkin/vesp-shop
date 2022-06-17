@@ -32,6 +32,24 @@ export default {
       scope: 'Scope',
       add_scope: 'Add scopes',
     },
+    category: {
+      title_one: 'Category',
+      title_many: 'Categories',
+      title: 'Title',
+      description: 'Description',
+      products: 'Products',
+      active: 'Active',
+    },
+    product: {
+      title_one: 'Product',
+      title_many: 'Products',
+      title: 'Title',
+      description: 'Description',
+      sku: 'SKU',
+      price: 'Price',
+      category: 'Category',
+      active: 'Active',
+    },
   },
   errors: {
     security: {

@@ -32,6 +32,24 @@ export default {
       scope: 'Разрешения',
       add_scope: 'Добавить',
     },
+    category: {
+      title_one: 'Категория',
+      title_many: 'Категории',
+      title: 'Название',
+      description: 'Описание',
+      products: 'Товары',
+      active: 'Включено',
+    },
+    product: {
+      title_one: 'Товар',
+      title_many: 'Товары',
+      title: 'Название',
+      description: 'Описание',
+      sku: 'Артикул',
+      price: 'Цена',
+      category: 'Категория',
+      active: 'Включено',
+    },
   },
   errors: {
     security: {

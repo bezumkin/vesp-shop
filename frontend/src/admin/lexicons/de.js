@@ -32,6 +32,24 @@ export default {
       scope: 'Umfang',
       add_scope: 'Bereiche hinzufügen',
     },
+    category: {
+      title_one: 'Kategorie',
+      title_many: 'Kategorien',
+      title: 'Titel',
+      description: 'Beschreibung',
+      products: 'Produkte',
+      active: 'Aktiv',
+    },
+    product: {
+      title_one: 'Produkt',
+      title_many: 'Produkte',
+      title: 'Titel',
+      description: 'Beschreibung',
+      sku: 'Artikelnummer',
+      price: 'Preis',
+      category: 'Kategorie',
+      active: 'Aktiv',
+    },
   },
   errors: {
     security: {

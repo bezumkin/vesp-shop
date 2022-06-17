@@ -22,6 +22,8 @@ $group = $app->group(
             static function (RouteCollectorProxy $group) {
                 $group->any('/users[/{id}]', App\Controllers\Admin\Users::class);
                 $group->any('/user-roles[/{id}]', App\Controllers\Admin\UserRoles::class);
+                $group->any('/categories[/{id}]', App\Controllers\Admin\Categories::class);
+                $group->any('/products[/{id}]', App\Controllers\Admin\Products::class);
             }
         );
 
