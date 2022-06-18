@@ -50,10 +50,11 @@ export default {
       return [
         {key: 'id', label: this.$t('components.table.columns.id'), sortable: true},
         {key: 'sku', label: this.$t('models.product.sku'), sortable: true},
+        {key: 'category.title', label: this.$t('models.product.category')},
         {key: 'title', label: this.$t('models.product.title'), sortable: true},
         {key: 'price', label: this.$t('models.product.price'), sortable: true},
         {
-          key: 'edited_at',
+          key: 'updated_at',
           label: this.$t('components.table.columns.updated_at'),
           formatter: this.$options.filters.datetime,
           sortable: true,
