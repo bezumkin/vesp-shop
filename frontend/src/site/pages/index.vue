@@ -1,37 +1,28 @@
 <template>
-  <div class="d-flex flex-column align-items-center justify-content-around text-center min-vh-100">
-    <div>
-      <b-img src="~/assets/images/logo-vesp.svg" alt="Vesp" width="800" style="max-width: 90vw" />
-      <div class="mt-5">
-        A simple framework based on <strong>Vue</strong>, <strong>Eloquent</strong>, <strong>Slim</strong> and
-        <strong>Phinx</strong>
-      </div>
-    </div>
-    <div>
-      <div class="d-flex align-items-center">
-        <div>Sponsored by</div>
-        <b-link href="https://pixmill.ch" target="_blank" class="ml-2">
-          <b-img src="~/assets/images/logo-pixmill.svg" alt="Pixmill" height="30" />
-        </b-link>
-      </div>
-      <div class="mt-5 small">bezumkin &copy; 2020 &mdash; {{ year }}</div>
-    </div>
+  <div>
+    <list-products v-model="page" :limit="limit" @load="onLoad" />
+
+    <b-pagination v-model="page" :total-rows="total" :per-page="limit" class="mt-3" />
   </div>
 </template>
 
 <script>
+import ListProducts from '../components/list-products'
+
 export default {
+  name: 'IndexPage',
+  components: {ListProducts},
   data() {
     return {
-      year: new Date().getFullYear(),
+      page: 1,
+      limit: 20,
+      total: 0,
     }
+  },
+  methods: {
+    onLoad({total}) {
+      this.total = total
+    },
   },
 }
 </script>
-
-<style lang="scss">
-body {
-  background-color: $black;
-  color: $gray-500;
-}
-</style>

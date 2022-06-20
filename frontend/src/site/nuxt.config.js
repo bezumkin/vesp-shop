@@ -26,7 +26,7 @@ Config.head.link = [
 ]
 
 Config.buildModules = ['@nuxtjs/style-resources', '@nuxtjs/eslint-module']
-Config.modules = ['bootstrap-vue/nuxt', '@nuxtjs/pwa']
+Config.modules = ['bootstrap-vue/nuxt', '@nuxtjs/axios', '@nuxtjs/pwa']
 
 Config.pwa = {
   icon: {
@@ -34,6 +34,6 @@ Config.pwa = {
   },
 }
 
-Config.bootstrapVue.componentPlugins = ['LayoutPlugin', 'ImagePlugin', 'LinkPlugin']
+Config.bootstrapVue.componentPlugins = ['LayoutPlugin', 'ImagePlugin', 'LinkPlugin', 'PaginationPlugin']
 
 export default Config

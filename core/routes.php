@@ -27,13 +27,13 @@ $group = $app->group(
             }
         );
 
-        /*
         $group->group(
             '/web',
             static function (RouteCollectorProxy $group) {
+                $group->any('/categories[/{id}]', App\Controllers\Web\Categories::class);
+                $group->any('/products[/{id}]', App\Controllers\Web\Products::class);
             }
         );
-        */
     }
 );
 
