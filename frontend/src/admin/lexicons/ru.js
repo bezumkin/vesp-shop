@@ -4,6 +4,10 @@ export default {
     title: 'Добро пожаловать!',
     message: 'Выберите пункт меню для начала работы',
   },
+  actions: {
+    files: 'Файлы',
+    upload: 'Загрузка',
+  },
   security: {
     username: 'Логин',
     password: 'Пароль',

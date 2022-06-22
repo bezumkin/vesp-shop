@@ -43,6 +43,7 @@ export default {
     tableActions() {
       return [
         {route: 'products-edit-id', icon: 'edit', title: this.$t('actions.edit')},
+        {route: 'products-files-id', icon: 'images', title: this.$t('actions.files')},
         {function: 'onDelete', icon: 'times', title: this.$t('actions.delete'), variant: 'danger'},
       ]
     },

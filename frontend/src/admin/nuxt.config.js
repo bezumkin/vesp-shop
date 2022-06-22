@@ -33,7 +33,15 @@ Config.i18n.vueI18n = '@/lexicons/index.js'
 Config.fontawesome = merge(Config.fontawesome, {
   addCss: false,
   icons: {
-    solid: union(Config.fontawesome.icons.solid, ['faUsers', 'faArrowLeft', 'faSignOutAlt']),
+    solid: union(Config.fontawesome.icons.solid, [
+      'faUsers',
+      'faArrowLeft',
+      'faSignOutAlt',
+      'faImages',
+      'faUpload',
+      'faPowerOff',
+      'faCheck',
+    ]),
   },
 })
 

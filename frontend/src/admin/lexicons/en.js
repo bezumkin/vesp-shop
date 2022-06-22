@@ -4,6 +4,10 @@ export default {
     title: 'Welcome!',
     message: 'Select a menu item to get started',
   },
+  actions: {
+    files: 'Files',
+    upload: 'Upload',
+  },
   security: {
     username: 'Username',
     password: 'Password',

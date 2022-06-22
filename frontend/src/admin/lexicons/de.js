@@ -4,6 +4,10 @@ export default {
     title: 'Herzlich willkommen!',
     message: 'Wählen Sie einen Menüpunkt, um loszulegen',
   },
+  actions: {
+    files: 'Dateien',
+    upload: 'Hochladen',
+  },
   security: {
     username: 'Nutzername',
     password: 'Passwort',

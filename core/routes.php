@@ -24,6 +24,7 @@ $group = $app->group(
                 $group->any('/user-roles[/{id}]', App\Controllers\Admin\UserRoles::class);
                 $group->any('/categories[/{id}]', App\Controllers\Admin\Categories::class);
                 $group->any('/products[/{id}]', App\Controllers\Admin\Products::class);
+                $group->any('/product/{product_id}/files[/{file_id}]', App\Controllers\Admin\Product\Files::class);
             }
         );
 

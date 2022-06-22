@@ -28,6 +28,7 @@
     "concurrently": "^6.0.0",
     "deepmerge": "^4.2.2",
     "pm2": "^4.5.5",
+    "vuedraggable": "^2.24.3",
     "yarn": "^1.22.18"
   },
   "devDependencies": {
