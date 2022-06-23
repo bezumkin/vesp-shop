@@ -12,14 +12,16 @@
         @dragover.prevent
       >
         <draggable v-model="files" class="files-container" animation="200" @change="onSort">
-          <div v-for="image in files" :key="image.id" class="image-wrapper">
-            <b-img
-              :src="$image(image.file, {fit: 'crop', w: thumbWidth, h: thumbHeight})"
-              :width="thumbWidth"
-              :height="thumbHeight"
-              :class="{image: true, disabled: !image.active}"
-              alt=""
-            />
+          <div v-for="image in files" :key="image.file_id" class="image-wrapper">
+            <b-link :href="$image(image.file)" target="_blank">
+              <b-img
+                :src="$image(image.file, {fit: 'crop', w: thumbWidth, h: thumbHeight})"
+                :width="thumbWidth"
+                :height="thumbHeight"
+                :class="{image: true, disabled: !image.active}"
+                alt=""
+              />
+            </b-link>
             <div class="d-flex justify-content-between mt-1">
               <b-button v-if="image.active" variant="warning" size="sm" @click="onDisable(image)">
                 <fa icon="power-off" class="fa-fw" />
@@ -27,7 +29,6 @@
               <b-button v-else variant="success" size="sm" @click="onEnable(image)">
                 <fa icon="check" class="fa-fw" />
               </b-button>
-
               <b-button variant="danger" size="sm" @click="onDelete(image)">
                 <fa icon="times" class="fa-fw" />
               </b-button>
@@ -96,11 +97,9 @@ export default {
       })
     },
     onDragEnter() {
-      console.log('drag over!')
       this.dragCount++
     },
     onDragLeave() {
-      console.log('drag leave!')
       this.dragCount--
     },
     async onAddFiles({dataTransfer}) {
@@ -141,16 +140,19 @@ export default {
     async onDisable(image) {
       image.active = false
       await this.$axios.patch(this.url + '/' + image.file_id, {active: false})
+      this.emitUpdate()
     },
     async onEnable(image) {
       image.active = true
       await this.$axios.patch(this.url + '/' + image.file_id, {active: true})
+      this.emitUpdate()
     },
     async onDelete(image) {
       this.loading = true
       await this.$axios.delete(this.url + '/' + image.file_id)
       this.files = this.files.filter((i) => i.file_id !== image.file_id)
       this.loading = false
+      this.emitUpdate()
     },
     async onSort() {
       const files = {}
@@ -158,6 +160,7 @@ export default {
         files[i.file_id] = idx
       })
       await this.$axios.post(this.url, {files})
+      this.emitUpdate()
     },
   },
 }
@@ -172,8 +175,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    min-height: 50vh;
+    min-height: 200px;
     padding-bottom: 1rem;
   }
   &.drag-over {
