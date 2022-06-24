@@ -9,7 +9,18 @@
       :sort="sort"
       :dir="dir"
       :row-class="rowClass"
-    />
+    >
+      <template #cell(file)="{value}">
+        <b-img
+          v-if="value.id"
+          :src="$image(value, {w: 100, h: 50, fit: 'crop'})"
+          :srcset="$image(value, {w: 200, h: 100, fit: 'crop'}) + ' 2x'"
+          width="100"
+          height="50"
+          alt=""
+        />
+      </template>
+    </vesp-table>
     <nuxt-child />
   </div>
 </template>
@@ -50,16 +61,17 @@ export default {
     fields() {
       return [
         {key: 'id', label: this.$t('components.table.columns.id'), sortable: true},
+        {key: 'file', label: ''},
         {key: 'sku', label: this.$t('models.product.sku'), sortable: true},
         {key: 'category.title', label: this.$t('models.product.category')},
         {key: 'title', label: this.$t('models.product.title'), sortable: true},
         {key: 'price', label: this.$t('models.product.price'), sortable: true},
-        {
+        /* {
           key: 'updated_at',
           label: this.$t('components.table.columns.updated_at'),
           formatter: this.$options.filters.datetime,
           sortable: true,
-        },
+        }, */
         {
           key: 'created_at',
           label: this.$t('components.table.columns.created_at'),

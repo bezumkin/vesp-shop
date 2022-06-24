@@ -15,7 +15,8 @@
           <div v-for="image in files" :key="image.file_id" class="image-wrapper">
             <b-link :href="$image(image.file)" target="_blank">
               <b-img
-                :src="$image(image.file, {fit: 'crop', w: thumbWidth, h: thumbHeight})"
+                :src="$image(image.file, {w: thumbWidth, h: thumbHeight, fit: 'crop'})"
+                :srcset="$image(image.file, {w: thumbWidth * 2, h: thumbWidth * 2, fit: 'crop'}) + ' 2x'"
                 :width="thumbWidth"
                 :height="thumbHeight"
                 :class="{image: true, disabled: !image.active}"

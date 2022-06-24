@@ -23,6 +23,11 @@ class ProductFile extends Model
     protected $guarded = [];
     protected $casts = ['active' => 'bool'];
 
+    public function getKeyName(): string
+    {
+        return 'file_id';
+    }
+
     public function getKey(): array
     {
         $key = [];
