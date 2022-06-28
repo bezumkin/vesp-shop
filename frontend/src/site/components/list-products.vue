@@ -2,24 +2,8 @@
   <b-overlay :show="loading" opacity="0.5">
     <template v-if="listView">
       <div v-for="product in products" :key="product.id" class="d-flex mt-2 align-items-center">
-        <div class="image mr-2">
-          <b-img
-            v-if="product.file.id"
-            :src="$image(product.file, {w: thumbWidth, h: thumbHeight, fit: 'crop'})"
-            :srcset="$image(product.file, {w: thumbWidth * 2, h: thumbHeight * 2, fit: 'crop'}) + ' 2x'"
-            :width="thumbWidth"
-            :height="thumbHeight"
-            alt=""
-          />
-        </div>
-        <div class="font-weight-bold">{{ product.title }}</div>
-        <div class="price ml-auto">{{ product.price }} руб.</div>
-      </div>
-    </template>
-    <template v-else>
-      <b-row>
-        <b-col v-for="product in products" :key="product.id" md="4">
-          <div class="image">
+        <b-link :to="getLink(product)">
+          <div class="image mr-2">
             <b-img
               v-if="product.file.id"
               :src="$image(product.file, {w: thumbWidth, h: thumbHeight, fit: 'crop'})"
@@ -27,11 +11,31 @@
               :width="thumbWidth"
               :height="thumbHeight"
               alt=""
-              fluid-grow
             />
           </div>
+        </b-link>
+        <b-link :to="getLink(product)" class="font-weight-bold">{{ product.title }}</b-link>
+        <div class="price ml-auto">{{ product.price }} руб.</div>
+      </div>
+    </template>
+    <template v-else>
+      <b-row>
+        <b-col v-for="product in products" :key="product.id" md="6" lg="4">
+          <b-link :to="getLink(product)">
+            <div class="image">
+              <b-img
+                v-if="product.file.id"
+                :src="$image(product.file, {w: thumbWidth, h: thumbHeight, fit: 'crop'})"
+                :srcset="$image(product.file, {w: thumbWidth * 2, h: thumbHeight * 2, fit: 'crop'}) + ' 2x'"
+                :width="thumbWidth"
+                :height="thumbHeight"
+                alt=""
+                fluid-grow
+              />
+            </div>
+          </b-link>
           <div class="d-flex justify-content-between mt-2">
-            <div class="font-weight-bold">{{ product.title }}</div>
+            <b-link :to="getLink(product)" class="font-weight-bold">{{ product.title }}</b-link>
             <div class="price">{{ product.price }} руб.</div>
           </div>
         </b-col>
@@ -119,6 +123,11 @@ export default {
     },
     dir() {
       this.$fetch()
+    },
+  },
+  methods: {
+    getLink(product) {
+      return {name: 'category-product', params: {category: product.category.alias, product: product.alias}}
     },
   },
 }

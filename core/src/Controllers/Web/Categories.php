@@ -21,4 +21,13 @@ class Categories extends ModelController
     {
         return $this->beforeGet($c);
     }
+
+    protected function getPrimaryKey(): ?array
+    {
+        if ($alias = $this->getProperty('alias')) {
+            return ['alias' => $alias];
+        }
+
+        return null;
+    }
 }

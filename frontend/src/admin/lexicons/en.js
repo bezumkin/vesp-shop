@@ -41,6 +41,7 @@ export default {
       title_many: 'Categories',
       title: 'Title',
       description: 'Description',
+      alias: 'Alias',
       products: 'Products',
       active: 'Active',
     },
@@ -49,6 +50,7 @@ export default {
       title_many: 'Products',
       title: 'Title',
       description: 'Description',
+      alias: 'Alias',
       sku: 'SKU',
       price: 'Price',
       category: 'Category',
@@ -59,6 +61,12 @@ export default {
     security: {
       inactive: 'Your account is not active',
       wrong: 'Wrong username or password',
+    },
+    category: {
+      alias_exists: 'This alias already exists, please specify another one',
+    },
+    product: {
+      alias_exists: 'Another product in this category is already using this alias',
     },
   },
 }

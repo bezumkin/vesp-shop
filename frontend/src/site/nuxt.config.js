@@ -31,7 +31,7 @@ Config.Vesp = {
   components: false,
   scss: false,
   i18n: false,
-  axios: true,
+  axios: false,
   utils: true,
   filters: false,
 }

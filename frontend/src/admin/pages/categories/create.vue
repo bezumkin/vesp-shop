@@ -20,6 +20,7 @@ export default {
       record: {
         title: '',
         description: '',
+        alias: '',
         active: true,
       },
     }

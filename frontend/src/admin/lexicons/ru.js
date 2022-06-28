@@ -41,6 +41,7 @@ export default {
       title_many: 'Категории',
       title: 'Название',
       description: 'Описание',
+      alias: 'Псевдоним',
       products: 'Товары',
       active: 'Включено',
     },
@@ -49,6 +50,7 @@ export default {
       title_many: 'Товары',
       title: 'Название',
       description: 'Описание',
+      alias: 'Псевдоним',
       sku: 'Артикул',
       price: 'Цена',
       category: 'Категория',
@@ -59,6 +61,12 @@ export default {
     security: {
       inactive: 'Ваш аккаунт неактивен',
       wrong: 'Неправильное имя или пароль',
+    },
+    category: {
+      alias_exists: 'Такой псевдоним уже существует, укажите другой',
+    },
+    product: {
+      alias_exists: 'Другой товар в этой категори уже использует такой псевдоним',
     },
   },
 }

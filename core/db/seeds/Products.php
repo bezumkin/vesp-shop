@@ -25,6 +25,7 @@ class Products extends AbstractSeed
         for ($i = 0; $i < $this->categories; $i++) {
             Category::query()->create([
                 'title' => 'Категория ' . ($i + 1),
+                'alias' => 'category-' . ($i + 1),
                 'description' => $faker->text,
                 'active' => random_int(0, 9) > 0,
             ]);
@@ -34,6 +35,7 @@ class Products extends AbstractSeed
             Product::query()->create([
                 'title' => 'Товар ' . ($i + 1),
                 'description' => $faker->text,
+                'alias' => 'product-' . ($i + 1),
                 'category_id' => random_int(1, $this->categories),
                 'sku' => $faker->unique()->randomNumber(9, true),
                 'price' => $faker->randomFloat(2, 100, 10000),

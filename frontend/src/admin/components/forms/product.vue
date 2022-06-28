@@ -8,6 +8,10 @@
       <b-form-textarea v-model.trim="record.description" rows="5" />
     </b-form-group>
 
+    <b-form-group :label="$t('models.product.alias')">
+      <b-form-input v-model.trim="record.alias" required />
+    </b-form-group>
+
     <b-row>
       <b-col md="6">
         <b-form-group :label="$t('models.product.sku')">

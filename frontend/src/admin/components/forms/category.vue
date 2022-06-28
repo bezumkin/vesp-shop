@@ -8,6 +8,10 @@
       <b-form-textarea v-model.trim="record.description" rows="5" />
     </b-form-group>
 
+    <b-form-group :label="$t('models.category.alias')">
+      <b-form-input v-model.trim="record.alias" required />
+    </b-form-group>
+
     <b-form-group>
       <b-form-checkbox v-model="record.active">
         {{ $t('models.category.active') }}

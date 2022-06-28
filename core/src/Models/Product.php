@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $category_id
  * @property string $title
  * @property ?string $description
+ * @property string $alias
  * @property string $sku
  * @property float $price
  * @property bool $active

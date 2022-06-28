@@ -20,6 +20,7 @@ export default {
       record: {
         title: '',
         description: '',
+        alias: '',
         sku: '',
         price: null,
         category_id: null,
