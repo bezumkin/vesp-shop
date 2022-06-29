@@ -52,6 +52,10 @@ export default {
       type: [String, Number],
       default: 1,
     },
+    category: {
+      type: String,
+      default: null,
+    },
     listView: {
       type: Boolean,
       default: false,
@@ -81,7 +85,7 @@ export default {
     this.loading = true
     try {
       const params = {limit: this.limit, page: this.page, sort: this.sort, dir: this.dir}
-      const {data} = await this.$axios.get('web/products', {params})
+      const {data} = await this.$axios.get(this.url, {params})
       this.products = data.rows
       this.total = data.total
       this.$emit('load', data)
@@ -99,6 +103,9 @@ export default {
       set(newValue) {
         this.$emit('input', newValue)
       },
+    },
+    url() {
+      return this.category ? 'web/categories/' + this.category + '/products' : 'web/products'
     },
     thumbWidth() {
       return this.listView ? 100 : 300

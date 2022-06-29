@@ -1,13 +1,34 @@
 @import 'variables';
 
-@import '~bootstrap/scss/bootstrap';
+/* @import '~bootstrap/scss/bootstrap'; */
 @import '~bootstrap/scss/reboot';
 @import '~bootstrap/scss/type';
 @import '~bootstrap/scss/bootstrap-grid';
 @import '~bootstrap/scss/pagination';
 @import '~bootstrap/scss/images';
 @import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/carousel';
+@import '~bootstrap/scss/breadcrumb';
+@import '~bootstrap/scss/spinners';
 @import '~bootstrap/scss/button-group';
 @import '~bootstrap/scss/utilities/sizing';
 @import '~bootstrap/scss/utilities/text';
 @import '~bootstrap/scss/utilities/flex';
+@import '~bootstrap/scss/utilities/screenreaders';
+@import '~bootstrap/scss/utilities/position';
+@import '~bootstrap/scss/utilities/background';
+@import '@fortawesome/fontawesome-svg-core/styles.css';
+
+.page-enter-active,
+.page-leave-active,
+.layout-enter-active,
+.layout-leave-active {
+  transition: opacity 0.1s
+}
+
+.page-enter,
+.page-leave-active,
+.layout-enter,
+.layout-leave-active {
+  opacity: 0
+}

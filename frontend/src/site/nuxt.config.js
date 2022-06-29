@@ -25,7 +25,7 @@ Config.head.link = [
   {rel: 'manifest', href: '/favicons/site.webmanifest'},
 ]
 
-Config.buildModules = ['@nuxtjs/style-resources', '@nuxtjs/eslint-module']
+Config.buildModules = ['@nuxtjs/style-resources', '@nuxtjs/eslint-module', '@nuxtjs/fontawesome']
 Config.modules = ['bootstrap-vue/nuxt', '@nuxtjs/axios', '@nuxtjs/pwa', '@vesp/frontend']
 Config.Vesp = {
   components: false,
@@ -42,6 +42,14 @@ Config.pwa = {
   },
 }
 
+Config.fontawesome = {
+  addCss: false,
+  component: 'fa',
+  icons: {
+    solid: ['faHome'],
+  },
+}
+
 Config.bootstrapVue.componentPlugins = [
   'LayoutPlugin',
   'ImagePlugin',
@@ -50,6 +58,8 @@ Config.bootstrapVue.componentPlugins = [
   'OverlayPlugin',
   'ButtonPlugin',
   'ButtonGroupPlugin',
+  'CarouselPlugin',
+  'BreadcrumbPlugin',
 ]
 
 export default Config

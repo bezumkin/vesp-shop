@@ -4,6 +4,7 @@ namespace App\Controllers\Web\Category;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Psr\Http\Message\ResponseInterface;
 
 class Products extends \App\Controllers\Web\Products
@@ -24,6 +25,13 @@ class Products extends \App\Controllers\Web\Products
     protected function beforeGet(Builder $c): Builder
     {
         $c->where('active', true);
+        $c->with('category:id,alias,title');
+        $c->with('productFiles', static function (HasMany $c) {
+            $c->where('active', true);
+            $c->orderBy('rank');
+            $c->select('product_id', 'file_id');
+            $c->with('file:id,updated_at');
+        });
 
         return $c;
     }
