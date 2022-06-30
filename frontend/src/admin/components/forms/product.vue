@@ -9,7 +9,7 @@
     </b-form-group>
 
     <b-form-group :label="$t('models.product.alias')">
-      <b-form-input v-model.trim="record.alias" required />
+      <input-alias v-model="record.alias" :watch="record.title" required />
     </b-form-group>
 
     <b-row>
@@ -38,8 +38,11 @@
 </template>
 
 <script>
+import InputAlias from '../../components/inputs/alias'
+
 export default {
   name: 'FormProduct',
+  components: {InputAlias},
   props: {
     value: {
       type: Object,
