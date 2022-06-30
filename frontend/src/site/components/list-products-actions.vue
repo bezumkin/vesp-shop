@@ -1,5 +1,5 @@
 <template>
-  <b-row class="mt-3 mb-3">
+  <b-row class="mb-3">
     <b-col md="4" class="text-center text-md-left mb-2 mb-md-0">
       <b-button-group>
         <b-button :pressed="!listView" variant="outline-secondary" @click="listView = false">Плитка</b-button>

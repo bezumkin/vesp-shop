@@ -46,12 +46,13 @@ Config.fontawesome = {
   addCss: false,
   component: 'fa',
   icons: {
-    solid: ['faHome'],
+    solid: ['faHome', 'faCartShopping', 'faMinus', 'faPlus'],
   },
 }
 
 Config.bootstrapVue.componentPlugins = [
   'LayoutPlugin',
+  'NavbarPlugin',
   'ImagePlugin',
   'LinkPlugin',
   'PaginationPlugin',
@@ -60,6 +61,7 @@ Config.bootstrapVue.componentPlugins = [
   'ButtonGroupPlugin',
   'CarouselPlugin',
   'BreadcrumbPlugin',
+  'ModalPlugin',
 ]
 
 export default Config

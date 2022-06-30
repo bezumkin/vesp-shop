@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-5">
+  <div>
     <breadcrumbs :category="category" />
 
     <list-products-actions v-model="listView" :sort.sync="sort" :dir.sync="dir" />

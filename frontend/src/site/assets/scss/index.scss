@@ -4,6 +4,7 @@
 @import '~bootstrap/scss/reboot';
 @import '~bootstrap/scss/type';
 @import '~bootstrap/scss/bootstrap-grid';
+@import '~bootstrap/scss/navbar';
 @import '~bootstrap/scss/pagination';
 @import '~bootstrap/scss/images';
 @import '~bootstrap/scss/buttons';
@@ -11,13 +12,18 @@
 @import '~bootstrap/scss/breadcrumb';
 @import '~bootstrap/scss/spinners';
 @import '~bootstrap/scss/button-group';
+@import '~bootstrap/scss/modal';
+@import '~bootstrap/scss/close';
+@import '~bootstrap/scss/transitions';
 @import '~bootstrap/scss/utilities/sizing';
 @import '~bootstrap/scss/utilities/text';
 @import '~bootstrap/scss/utilities/flex';
 @import '~bootstrap/scss/utilities/screenreaders';
 @import '~bootstrap/scss/utilities/position';
 @import '~bootstrap/scss/utilities/background';
+@import '~bootstrap/scss/utilities/borders';
 @import '@fortawesome/fontawesome-svg-core/styles.css';
+@import '~bootstrap-vue/src/components/modal';
 
 .page-enter-active,
 .page-leave-active,

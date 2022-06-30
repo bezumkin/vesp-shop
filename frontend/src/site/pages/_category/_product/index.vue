@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5">
+  <div>
     <breadcrumbs :category="product.category" :product="product" />
 
     <b-row class="mt-3">
@@ -23,7 +23,7 @@
         <div class="mt-3">{{ product.description }}</div>
         <div class="font-weight-bold mt-3">{{ product.price }} руб.</div>
         <div class="mt-3">
-          <b-button variant="primary " disabled>В корзину!</b-button>
+          <b-button variant="primary" @click="$store.commit('addToCart', product)">В корзину!</b-button>
         </div>
       </b-col>
     </b-row>

@@ -15,7 +15,10 @@
           </div>
         </b-link>
         <b-link :to="getLink(product)" class="font-weight-bold">{{ product.title }}</b-link>
-        <div class="price ml-auto">{{ product.price }} руб.</div>
+        <b-button variant="light" size="sm" class="ml-auto" @click="$store.commit('addToCart', product)">
+          <fa icon="cart-shopping" class="mr-1" />
+          {{ product.price }} руб.
+        </b-button>
       </div>
     </template>
     <template v-else>
@@ -34,9 +37,12 @@
               />
             </div>
           </b-link>
-          <div class="d-flex justify-content-between mt-2">
+          <div class="d-flex justify-content-between align-items-center mt-2">
             <b-link :to="getLink(product)" class="font-weight-bold">{{ product.title }}</b-link>
-            <div class="price">{{ product.price }} руб.</div>
+            <b-button variant="light" size="sm" @click="$store.commit('addToCart', product)">
+              <fa icon="cart-shopping" class="mr-1" />
+              {{ product.price }} руб.
+            </b-button>
           </div>
         </b-col>
       </b-row>
