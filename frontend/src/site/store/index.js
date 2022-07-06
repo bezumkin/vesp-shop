@@ -31,6 +31,17 @@ export const getters = {
     })
     return total ? total.toFixed(2) : 0
   },
+  products(state) {
+    const products = {}
+    state.cart.forEach((i) => {
+      if (!products[i.id]) {
+        products[i.id] = {...i, amount: 1}
+      } else {
+        products[i.id].amount += 1
+      }
+    })
+    return Object.values(products)
+  },
 }
 
 export const actions = {

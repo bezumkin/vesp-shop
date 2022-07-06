@@ -10,6 +10,11 @@ export default [
     scope: 'products',
   },
   {
+    name: 'orders',
+    title: 'models.order.title_many',
+    scope: 'orders',
+  },
+  {
     name: 'users',
     title: 'models.user.title_many',
     scope: 'users',

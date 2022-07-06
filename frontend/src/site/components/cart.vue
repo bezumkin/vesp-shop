@@ -37,15 +37,7 @@ export default {
   name: 'Cart',
   computed: {
     products() {
-      const products = {}
-      this.$store.state.cart.forEach((i) => {
-        if (!products[i.id]) {
-          products[i.id] = {...i, amount: 1}
-        } else {
-          products[i.id].amount += 1
-        }
-      })
-      return Object.values(products)
+      return this.$store.getters.products
     },
     total() {
       return this.$store.getters.cartTotal

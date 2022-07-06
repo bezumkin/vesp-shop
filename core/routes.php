@@ -25,6 +25,7 @@ $group = $app->group(
                 $group->any('/categories[/{id}]', App\Controllers\Admin\Categories::class);
                 $group->any('/products[/{id}]', App\Controllers\Admin\Products::class);
                 $group->any('/product/{product_id}/files[/{file_id}]', App\Controllers\Admin\Product\Files::class);
+                $group->any('/orders[/{id}]', App\Controllers\Admin\Orders::class);
             }
         );
 
@@ -34,6 +35,7 @@ $group = $app->group(
                 $group->any('/categories[/{alias}]', App\Controllers\Web\Categories::class);
                 $group->any('/categories/{category}/products[/{alias}]', App\Controllers\Web\Category\Products::class);
                 $group->any('/products', App\Controllers\Web\Products::class);
+                $group->any('/orders', App\Controllers\Web\Orders::class);
             }
         );
     }

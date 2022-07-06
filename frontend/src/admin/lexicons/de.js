@@ -56,6 +56,17 @@ export default {
       category: 'Kategorie',
       active: 'Aktiv',
     },
+    order: {
+      title_one: 'Befehl',
+      title_many: 'Aufträge',
+      name: 'Kunde',
+      email: 'Email',
+      post: 'Post',
+      city: 'Stadt',
+      address: 'Adresse',
+      paid: 'Bezahlt',
+      total: 'Gesamt',
+    },
   },
   errors: {
     security: {

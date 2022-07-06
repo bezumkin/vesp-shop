@@ -56,6 +56,17 @@ export default {
       category: 'Category',
       active: 'Active',
     },
+    order: {
+      title_one: 'Order',
+      title_many: 'Orders',
+      name: 'Customer',
+      email: 'Email',
+      post: 'Post',
+      city: 'City',
+      address: 'Address',
+      paid: 'Paid',
+      total: 'Total',
+    },
   },
   errors: {
     security: {

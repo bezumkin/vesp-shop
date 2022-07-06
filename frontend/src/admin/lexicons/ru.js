@@ -56,6 +56,17 @@ export default {
       category: 'Категория',
       active: 'Включено',
     },
+    order: {
+      title_one: 'Заказ',
+      title_many: 'Заказы',
+      name: 'Имя покупателя',
+      email: 'Email',
+      post: 'Индекс',
+      city: 'Город',
+      address: 'Адрес',
+      paid: 'Оплачено',
+      total: 'Стоимость',
+    },
   },
   errors: {
     security: {

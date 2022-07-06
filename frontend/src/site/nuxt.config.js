@@ -62,6 +62,10 @@ Config.bootstrapVue.componentPlugins = [
   'CarouselPlugin',
   'BreadcrumbPlugin',
   'ModalPlugin',
+  'FormPlugin',
+  'FormGroupPlugin',
+  'FormInputPlugin',
+  'SpinnerPlugin',
 ]
 
 export default Config

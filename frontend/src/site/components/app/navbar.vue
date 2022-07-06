@@ -12,16 +12,18 @@
 
     <b-modal v-model="showCart" title="Корзина" hide-footer>
       <cart />
+      <order />
     </b-modal>
   </b-navbar>
 </template>
 
 <script>
 import Cart from '../../components/cart'
+import Order from '../../components/order'
 
 export default {
   name: 'AppNavbar',
-  components: {Cart},
+  components: {Order, Cart},
   data() {
     return {
       showCart: false,
