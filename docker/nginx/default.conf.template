@@ -1,0 +1,49 @@
+gzip on;
+
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 16 8k;
+gzip_http_version 1.1;
+gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+server {
+    listen 80 default;
+    listen ${NGINX_PORT};
+    charset utf-8;
+    root /vesp/www/;
+    client_max_body_size 100M;
+    client_body_buffer_size 100M;
+
+    location ~ ^/(api|__clockwork)/ {
+        rewrite ^/(api|__clockwork)/(.*)$ /api.php;
+    }
+
+    location /admin/ {
+        root /vesp/frontend/dist/;
+        access_log off;
+        log_not_found off;
+        gzip on;
+        gzip_types text/css application/javascript application/x-javascript text/javascript image/svg+xml;
+        expires 1y;
+        try_files $uri /admin/200.html;
+    }
+
+    location / {
+        root /vesp/frontend/dist/site/;
+        access_log off;
+        log_not_found off;
+        expires 1y;
+        try_files $uri /200.html;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_pass php-fpm:9000;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}

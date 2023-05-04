@@ -1,11 +1,15 @@
 /.idea
+/.local
 /.env
 /.env.local
+/tmp
+/upload
+/docker/log
+/docker/mariadb
+/docker/.env
 /core/vendor
 /frontend/node_modules
 /frontend/.nuxt
 /frontend/.eslintcache
 /frontend/dist
 /frontend/src/site/static/sw.js
-/tmp
-/upload
