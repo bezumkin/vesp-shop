@@ -16,7 +16,10 @@
   "require": {
     "ext-json": "*",
     "akrabat/ip-address-middleware": "^2.1",
+    "fenom/fenom": "^3.0",
+    "pelago/emogrifier": "^7.0",
     "peppeocchi/php-cron-scheduler": "^4.0",
+    "phpmailer/phpmailer": "^6.8",
     "vesp/core": "^2.3.0"
   },
   "require-dev": {

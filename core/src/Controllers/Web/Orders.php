@@ -4,6 +4,7 @@ namespace App\Controllers\Web;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Services\Mail;
 use Psr\Http\Message\ResponseInterface;
 use Vesp\Controllers\Controller;
 
@@ -37,6 +38,18 @@ class Orders extends Controller
         $order->total = $orderTotal;
         if ($order->save()) {
             $order->orderProducts()->createMany($orderProducts);
+        }
+        // Use only if STMP is specified
+        if ($order->email) {
+            $error = (new Mail())->send(
+                $order->email,
+                'Спасибо за ваш заказ!',
+                'email-order-new.tpl',
+                ['data' => $order->toArray()]
+            );
+            if ($error) {
+                return $this->failure($error);
+            }
         }
 
         return $this->success();
