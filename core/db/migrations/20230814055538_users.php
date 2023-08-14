@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Schema\Blueprint;
 use Vesp\Services\Migration;
 
@@ -23,13 +25,36 @@ class Users extends Migration
             function (Blueprint $table) {
                 $table->id();
                 $table->string('username')->unique();
-                $table->string('password');
                 $table->string('fullname')->nullable();
+                $table->string('password');
+                $table->string('tmp_password')->nullable();
+                $table->string('salt')->nullable();
                 $table->string('email')->nullable();
+                $table->string('phone')->nullable();
+
+                $table->tinyInteger('gender')->nullable();
+                $table->string('company')->nullable();
+                $table->string('address')->nullable();
+                $table->string('country')->nullable();
+                $table->string('city')->nullable();
+                $table->string('zip')->nullable();
+                $table->char('lang', 2)->nullable();
+
                 $table->foreignId('role_id')
                     ->constrained('user_roles')->cascadeOnDelete();
-                $table->boolean('active')->default(true)->index();
+                $table->foreignId('file_id')->nullable()
+                    ->constrained('files')->nullOnDelete();
+                $table->boolean('active')->default(true);
+                $table->boolean('blocked')->default(false);
+                $table->text('comment')->nullable();
+                $table->unsignedInteger('remote_id')->nullable()->index();
                 $table->timestamps();
+
+                $table->index(['active', 'blocked']);
+                $table->foreign('lang')
+                    ->references('lang')
+                    ->on('languages')
+                    ->nullOnDelete();
             }
         );
 
