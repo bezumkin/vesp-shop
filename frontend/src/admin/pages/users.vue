@@ -10,7 +10,20 @@
       :sort="sort"
       :dir="dir"
       :row-class="rowClass"
-    />
+    >
+      <template #cell(file)="{value}">
+        <b-img
+          v-if="value.id"
+          :key="value.id"
+          :src="$image(value, {w: 75, h: 75, fit: 'crop'})"
+          :srcset="$image(value, {w: 150, h: 150, fit: 'crop'}) + ' 2x'"
+          width="75"
+          height="75"
+          alt=""
+          class="rounded-circle"
+        />
+      </template>
+    </vesp-table>
     <nuxt-child />
   </div>
 </template>
@@ -56,6 +69,7 @@ export default {
     fields() {
       return [
         {key: 'id', label: this.$t('components.table.columns.id'), sortable: true},
+        {key: 'file', label: this.$t('models.user.file')},
         {key: 'username', label: this.$t('models.user.username'), sortable: true},
         {key: 'fullname', label: this.$t('models.user.fullname'), sortable: true},
         {key: 'role.title', label: this.$t('models.user.role')},

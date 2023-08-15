@@ -2,14 +2,25 @@
 
 namespace App\Controllers\Admin;
 
+use App\Controllers\Traits\FileModelController;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Vesp\Controllers\ModelController;
 
 class Users extends ModelController
 {
+    use FileModelController;
+
     protected $scope = 'users';
     protected $model = User::class;
+    public $attachments = ['file'];
+
+    protected function beforeGet(Builder $c): Builder
+    {
+        $c->with('file:id,updated_at');
+
+        return $c;
+    }
 
     protected function beforeCount(Builder $c): Builder
     {
@@ -28,6 +39,7 @@ class Users extends ModelController
     protected function afterCount(Builder $c): Builder
     {
         $c->with('role:id,title');
+        $c->with('file:id,updated_at');
 
         return $c;
     }

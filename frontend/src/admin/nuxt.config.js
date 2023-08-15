@@ -29,6 +29,10 @@ Config.router = merge(Config.router, {
 
 // Specify vueI18n config as a function for smooth development
 Config.i18n.vueI18n = '@/lexicons/index.js'
+Config.i18n.locales = [
+  {code: 'en', title: 'English'},
+  {code: 'ru', title: 'Русский'},
+]
 
 Config.fontawesome = merge(Config.fontawesome, {
   addCss: false,

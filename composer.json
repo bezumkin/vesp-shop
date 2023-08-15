@@ -14,7 +14,9 @@
     }
   },
   "require": {
+    "ext-fileinfo": "*",
     "ext-json": "*",
+    "ext-pdo": "*",
     "akrabat/ip-address-middleware": "^2.1",
     "fenom/fenom": "^3.0",
     "pelago/emogrifier": "^7.0",
