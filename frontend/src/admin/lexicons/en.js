@@ -57,6 +57,8 @@ export default {
       description: 'Description',
       alias: 'Alias',
       products: 'Products',
+      file: 'Image',
+      parent: 'Parent',
       active: 'Active',
     },
     product: {

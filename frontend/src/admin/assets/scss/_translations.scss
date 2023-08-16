@@ -1,0 +1,29 @@
+.form-group {
+  &.icon-ru,
+  &.icon-en {
+    position: relative;
+    legend {
+      padding-right: 30px;
+    }
+    &:after {
+      position: absolute;
+      content: '';
+      width: 20px;
+      height: 20px;
+      top: -30px;
+      right: 0;
+    }
+    &.icon-ru {
+      &:after {
+        background: url('../images/icon-lang-ru.svg') no-repeat center;
+        background-size: 100%;
+      }
+    }
+    &.icon-en {
+      &:after {
+        background: url('../images/icon-lang-en.svg') no-repeat center;
+        background-size: 100%;
+      }
+    }
+  }
+}

@@ -21,6 +21,7 @@ Config.axios.baseURL = env.API_URL || '/api/'
 Config.head.title = env.APP_NAME || 'Vesp Framework'
 
 Config.modules = union(Config.modules, ['@vesp/frontend', '@nuxtjs/auth-next'])
+Config.plugins = ['@/plugins/utils.js']
 
 Config.router = merge(Config.router, {
   base: '/admin/',
@@ -29,9 +30,10 @@ Config.router = merge(Config.router, {
 
 // Specify vueI18n config as a function for smooth development
 Config.i18n.vueI18n = '@/lexicons/index.js'
+Config.i18n.defaultLocale = 'ru'
 Config.i18n.locales = [
-  {code: 'en', title: 'English'},
   {code: 'ru', title: 'Русский'},
+  {code: 'en', title: 'English'},
 ]
 
 Config.fontawesome = merge(Config.fontawesome, {
@@ -51,6 +53,7 @@ Config.fontawesome = merge(Config.fontawesome, {
 
 Config.bootstrapVue = merge(Config.bootstrapVue, {
   componentPlugins: union(Config.bootstrapVue.componentPlugins, [
+    'TabsPlugin',
     'ImagePlugin',
     'FormCheckboxPlugin',
     'FormTagsPlugin',

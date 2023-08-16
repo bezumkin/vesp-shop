@@ -57,6 +57,8 @@ export default {
       description: 'Описание',
       alias: 'Псевдоним',
       products: 'Товары',
+      file: 'Изображение',
+      parent: 'Родитель',
       active: 'Включено',
     },
     product: {

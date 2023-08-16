@@ -42,7 +42,7 @@ public function up(): void
                 ->constrained('categories')->cascadeOnDelete();
             $table->char('lang', 2);
 
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('description')->nullable();
 
             $table->primary(['category_id', 'lang']);

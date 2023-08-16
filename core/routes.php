@@ -20,6 +20,7 @@ $group = $app->group(
         $group->group(
             '/admin',
             static function (RouteCollectorProxy $group) {
+                $group->map(['OPTIONS', 'GET'], '/languages', App\Controllers\Admin\Languages::class);
                 $group->any('/users[/{id}]', App\Controllers\Admin\Users::class);
                 $group->any('/user-roles[/{id}]', App\Controllers\Admin\UserRoles::class);
                 $group->any('/categories[/{id}]', App\Controllers\Admin\Categories::class);

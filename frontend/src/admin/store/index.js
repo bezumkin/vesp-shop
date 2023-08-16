@@ -3,11 +3,15 @@ import menuItems from '../plugins/menu'
 
 export const state = () => ({
   menu: menuItems,
+  languages: [],
 })
 
 export const mutations = {
   menu(state, payload) {
     state.menu = payload
+  },
+  languages(state, payload) {
+    state.languages = payload
   },
 }
 
@@ -26,5 +30,17 @@ export const getters = {
       }
     }
     return filtered
+  },
+}
+
+export const actions = {
+  async languages({commit, state}) {
+    if (!state.languages.length) {
+      try {
+        const {data} = await this.$axios.get('admin/languages', {params: {combo: true}})
+        commit('languages', data.rows)
+      } catch (e) {}
+    }
+    return state.languages
   },
 }
