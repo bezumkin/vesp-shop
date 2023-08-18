@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  *
  * @property-read CategoryTranslation[] $categoriesTranslations
  * @property-read Category[] $categories
+ * @property-read ProductTranslation[] $productsTranslations
+ * @property-read Product[] $products
  */
 class Language extends Model
 {
@@ -39,6 +41,23 @@ class Language extends Model
             'id',
             'lang',
             'category_id'
+        );
+    }
+
+    public function productsTranslations(): HasMany
+    {
+        return $this->hasMany(ProductTranslation::class, 'lang');
+    }
+
+    public function products(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Product::class,
+            ProductTranslation::class,
+            'lang',
+            'id',
+            'lang',
+            'product_id'
         );
     }
 }

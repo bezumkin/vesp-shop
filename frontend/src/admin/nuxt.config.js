@@ -19,6 +19,9 @@ Config.generate = {
 const env = loadEnv(findEnv('../'))
 Config.axios.baseURL = env.API_URL || '/api/'
 Config.head.title = env.APP_NAME || 'Vesp Framework'
+Config.publicRuntimeConfig = {
+  SITE_URL: env.SITE_URL,
+}
 
 Config.modules = union(Config.modules, ['@vesp/frontend', '@nuxtjs/auth-next'])
 Config.plugins = ['@/plugins/utils.js']

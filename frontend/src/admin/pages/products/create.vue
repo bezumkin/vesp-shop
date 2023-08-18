@@ -1,5 +1,5 @@
 <template>
-  <vesp-modal v-model="record" :url="url" :title="$t('models.product.title_one')">
+  <vesp-modal v-model="record" :url="url" :title="$t('models.product.title_one')" size="lg">
     <template #form-fields>
       <form-product v-model="record" />
     </template>
@@ -21,10 +21,11 @@ export default {
         title: '',
         description: '',
         alias: '',
-        sku: '',
+        article: '',
         price: null,
         category_id: null,
         active: true,
+        translations: [],
       },
     }
   },

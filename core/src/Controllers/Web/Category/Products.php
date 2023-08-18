@@ -14,7 +14,7 @@ class Products extends \App\Controllers\Web\Products
 
     public function checkScope(string $method): ?ResponseInterface
     {
-        $c = Category::query()->where(['active' => true, 'alias' => $this->getProperty('category')]);
+        $c = Category::query()->where(['active' => true, 'uri' => $this->getProperty('category')]);
         if (!$this->category = $c->first()) {
             return $this->failure('', 404);
         }
@@ -25,7 +25,7 @@ class Products extends \App\Controllers\Web\Products
     protected function beforeGet(Builder $c): Builder
     {
         $c->where('active', true);
-        $c->with('category:id,alias,title');
+        $c->with('category:id,uri,active', 'category.translations:category_id,lang,title');
         $c->with('productFiles', static function (HasMany $c) {
             $c->where('active', true);
             $c->orderBy('rank');

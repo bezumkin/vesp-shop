@@ -3,10 +3,8 @@
 namespace App\Models\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use RuntimeException;
 
 /**
- * @method array getKeyName
  * @method Builder newQuery
  */
 trait CompositeKey
@@ -29,10 +27,17 @@ trait CompositeKey
         return parent::getAttribute($key);
     }
 
+    public function getKeyName(): string
+    {
+        $tmp = array_merge([], $this->primaryKey);
+
+        return array_pop($tmp);
+    }
+
     public function getKey(): array
     {
         $key = [];
-        foreach ($this->getKeyName() as $item) {
+        foreach ($this->primaryKey as $item) {
             $key[$item] = $this->getAttribute($item);
         }
 
@@ -41,25 +46,13 @@ trait CompositeKey
 
     protected function setKeysForSaveQuery($query): Builder
     {
-        foreach ($this->getKeyName() as $key) {
-            if (isset($this->$key)) {
-                $query->where($key, '=', $this->$key);
-            } else {
-                throw new RuntimeException(__METHOD__ . 'Missing part of the primary key: ' . $key);
-            }
+        foreach ($this->getKey() as $key => $value) {
+            $query->where($key, $this->original[$key] ?? $value);
         }
 
         return $query;
     }
 
-    /**
-     * Execute a query for a single record by ID.
-     *
-     * @param array $ids Array of keys, like [column => value].
-     * @param array $columns
-     *
-     * @return mixed|static
-     */
     public static function find($ids, $columns = ['*'])
     {
         $me = new self();

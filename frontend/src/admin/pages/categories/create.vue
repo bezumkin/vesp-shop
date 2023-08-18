@@ -22,6 +22,7 @@ export default {
         description: '',
         alias: '',
         active: true,
+        translations: [],
       },
     }
   },

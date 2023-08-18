@@ -7,32 +7,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $product_id
- * @property int $file_id
- * @property bool $active
+ * @property int $category_id
  * @property int $rank
- * @property int $remote_id
  *
  * @property-read Product $product
- * @property-read File $file
+ * @property-read Category $category
  */
-class ProductFile extends Model
+class ProductCategory extends Model
 {
     use Traits\CompositeKey;
 
     public $timestamps = false;
     public $incrementing = false;
-    protected $primaryKey = ['product_id', 'file_id'];
+    protected $primaryKey = ['product_id', 'category_id'];
     protected $guarded = [];
-    protected $casts = ['active' => 'bool'];
-    protected $hidden = ['remote_id'];
 
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function file(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsTo(Category::class);
     }
 }

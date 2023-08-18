@@ -27,7 +27,7 @@ class Products extends ModelController
 
     protected function afterCount(Builder $c): Builder
     {
-        $c->with('category:id,title,alias');
+        $c->with('category:id,uri,active', 'category.translations:category_id,lang,title');
         $c->with('firstFile');
 
         return $c;

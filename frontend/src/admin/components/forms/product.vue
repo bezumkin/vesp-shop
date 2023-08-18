@@ -1,33 +1,146 @@
 <template>
   <div>
-    <b-form-group :label="$t('models.product.title')">
-      <b-form-input v-model.trim="record.title" required autofocus />
-    </b-form-group>
+    <lang-tabs v-model="lang" />
 
-    <b-form-group :label="$t('models.product.description')">
-      <b-form-textarea v-model.trim="record.description" rows="5" />
-    </b-form-group>
+    <hr />
 
-    <b-form-group :label="$t('models.product.alias')">
-      <input-alias v-model="record.alias" :watch="record.title" required />
-    </b-form-group>
-
-    <b-row>
-      <b-col md="6">
-        <b-form-group :label="$t('models.product.sku')">
-          <b-form-input v-model.trim="record.sku" required />
+    <b-row class="mt-4">
+      <b-col md="7">
+        <b-form-group v-lang-icon="lang" :label="$t('models.product.title')">
+          <b-form-input
+            v-for="(translation, idx) in record.translations"
+            v-show="translation.lang === lang"
+            :key="idx"
+            v-model.trim="translation.title"
+            autofocus
+            required
+          />
         </b-form-group>
       </b-col>
-      <b-col md="6">
-        <b-form-group :label="$t('models.product.price')">
-          <b-form-input v-model.trim="record.price" />
+      <b-col md="5">
+        <b-form-group :label="$t('models.product.alias')">
+          <input-alias
+            v-model.trim="record.alias"
+            :watch="record.translations.length > 0 ? record.translations[0].title : null"
+            required
+          />
         </b-form-group>
       </b-col>
     </b-row>
 
-    <b-form-group :label="$t('models.product.category')">
-      <vesp-input-combo-box v-model="record.category_id" url="admin/categories" required />
+    <b-form-group v-lang-icon="lang" :label="$t('models.product.subtitle')">
+      <b-form-input
+        v-for="(translation, idx) in record.translations"
+        v-show="translation.lang === lang"
+        :key="idx"
+        v-model.trim="translation.subtitle"
+      />
     </b-form-group>
+
+    <b-form-group :label="$t('models.product.category')">
+      <vesp-input-combo-box
+        v-model="record.category_id"
+        url="admin/categories"
+        sort="rank"
+        :format-value="(item) => $translate(item.translations)"
+        required
+      >
+        <template #default="{item}">
+          <div :class="{'text-muted': !item.active}">
+            {{ $translate(item.translations) }}
+            <div class="small text-muted">{{ item.uri }}</div>
+          </div>
+        </template>
+      </vesp-input-combo-box>
+    </b-form-group>
+
+    <b-row>
+      <b-col md="6">
+        <b-form-group :label="$t('models.product.price')">
+          <b-form-input v-model="record.price" type="number" min="0" step="0.01" />
+        </b-form-group>
+      </b-col>
+      <b-col md="6">
+        <b-form-group :label="$t('models.product.old_price')">
+          <b-form-input v-model="record.old_price" type="number" min="0" step="0.01" />
+        </b-form-group>
+      </b-col>
+    </b-row>
+
+    <b-row>
+      <b-col md="6">
+        <b-form-group :label="$t('models.product.article')">
+          <b-form-input v-model.trim="record.article" />
+        </b-form-group>
+      </b-col>
+      <b-col md="6">
+        <b-form-group :label="$t('models.product.weight')">
+          <b-form-input v-model="record.old_price" type="number" step="0.01" />
+        </b-form-group>
+      </b-col>
+    </b-row>
+
+    <b-form-group v-lang-icon="lang" :label="$t('models.product.description')">
+      <b-form-textarea
+        v-for="(translation, idx) in record.translations"
+        v-show="translation.lang === lang"
+        :key="idx"
+        v-model.trim="translation.description"
+        rows="3"
+      />
+    </b-form-group>
+
+    <b-form-group v-lang-icon="lang" :label="$t('models.product.content')">
+      <b-form-textarea
+        v-for="(translation, idx) in record.translations"
+        v-show="translation.lang === lang"
+        :key="idx"
+        v-model.trim="translation.content"
+        rows="5"
+      />
+    </b-form-group>
+
+    <b-row>
+      <b-col md="6">
+        <b-form-group :label="$t('models.product.made_in')">
+          <b-form-input v-model.trim="record.made_in" />
+        </b-form-group>
+      </b-col>
+      <b-col md="6">
+        <b-form-group :label="$t('models.product.flags')">
+          <b-row>
+            <b-col>
+              <b-form-checkbox v-model.trim="record.new">
+                {{ $t('models.product.flag_new') }}
+              </b-form-checkbox>
+            </b-col>
+            <b-col>
+              <b-form-checkbox v-model.trim="record.popular">
+                {{ $t('models.product.flag_popular') }}
+              </b-form-checkbox>
+            </b-col>
+            <b-col>
+              <b-form-checkbox v-model.trim="record.favorite">
+                {{ $t('models.product.flag_favorite') }}
+              </b-form-checkbox>
+            </b-col>
+          </b-row>
+        </b-form-group>
+      </b-col>
+    </b-row>
+
+    <b-row>
+      <b-col md="6">
+        <b-form-group :label="$t('models.product.colors')">
+          <b-form-tags v-model="record.colors" />
+        </b-form-group>
+      </b-col>
+      <b-col md="6">
+        <b-form-group :label="$t('models.product.variants')">
+          <b-form-tags v-model="record.variants" />
+        </b-form-group>
+      </b-col>
+    </b-row>
 
     <b-form-group>
       <b-form-checkbox v-model.trim="record.active">
@@ -38,16 +151,25 @@
 </template>
 
 <script>
-import InputAlias from '../../components/inputs/alias'
+import InputAlias from '@/components/inputs/alias.vue'
+import Translations from '@/mixins/translations.js'
+import LangTabs from '@/components/lang-tabs.vue'
 
 export default {
   name: 'FormProduct',
-  components: {InputAlias},
+  components: {LangTabs, InputAlias},
+  mixins: [Translations],
   props: {
     value: {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      lang: this.$i18n.locale || 'ru',
+      translationFields: {title: '', subtitle: '', description: '', content: ''},
+    }
   },
   computed: {
     record: {
