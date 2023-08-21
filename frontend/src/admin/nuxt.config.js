@@ -50,6 +50,7 @@ Config.fontawesome = merge(Config.fontawesome, {
       'faUpload',
       'faPowerOff',
       'faCheck',
+      'faMinus',
     ]),
   },
 })
@@ -62,6 +63,7 @@ Config.bootstrapVue = merge(Config.bootstrapVue, {
     'FormTagsPlugin',
     'DropdownPlugin',
     'ListGroupPlugin',
+    'SpinnerPlugin',
   ]),
 })
 

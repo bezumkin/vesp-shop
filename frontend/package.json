@@ -29,6 +29,7 @@
     "deepmerge": "^4.2.2",
     "pm2": "^4.5.5",
     "slugify": "^1.6.5",
+    "sortablejs": "^1.15.0",
     "vuedraggable": "^2.24.3",
     "yarn": "^1.22.18"
   },

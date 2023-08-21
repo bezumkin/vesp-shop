@@ -73,4 +73,36 @@ class Categories extends ModelController
 
         return null;
     }
+
+    public function post(): ResponseInterface
+    {
+        $key = $this->getPrimaryKey();
+        $rank = (int)$this->getProperty('rank', 0);
+        $parentId = (int)$this->getProperty('parent', 0);
+        /** @var Category $category */
+        if (!$key || !$category = Category::query()->find($key)) {
+            return $this->failure('Not Found', 404);
+        }
+        if ($parentId && Category::query()->where('id', $parentId)->count()) {
+            $category->parent_id = $parentId;
+        } else {
+            $category->parent_id = null;
+        }
+        $dir = $category->rank > $rank ? 'desc' : 'asc';
+        $category->rank = $rank;
+        $category->save();
+
+        $rows = Category::query()->orderBy('rank')->orderBy('updated_at', $dir);
+        if ($parentId) {
+            $rows->where('parent_id', $parentId);
+        } else {
+            $rows->whereNull('parent_id');
+        }
+        /** @var Category $row */
+        foreach ($rows->cursor() as $idx => $row) {
+            $row->update(['rank' => $idx, 'timestamps' => false]);
+        }
+
+        return $this->success();
+    }
 }

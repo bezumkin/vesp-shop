@@ -1,0 +1,89 @@
+.categories-tree {
+  .root-nodes {
+    .nodes {
+      border-radius: $border-radius;
+      transition: background-color 0.25s;
+
+      .btn {
+        box-shadow: none;
+      }
+    }
+
+    > .nodes {
+      margin-bottom: 0.25rem;
+
+      &.expanded {
+        padding-bottom: 0.5rem;
+        background-color: #fafafa;
+
+        .children-nodes {
+          min-height: 2rem;
+        }
+      }
+    }
+  }
+
+  .node {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 1.5rem;
+    border-radius: $border-radius;
+    transition: background-color 0.25s;
+
+    .toggle {
+      padding: 0;
+      left: 0;
+      position: absolute;
+    }
+
+    .title {
+      padding: 0.35rem 0;
+      cursor: pointer;
+      flex-grow: 1;
+    }
+
+    &.category {
+      .title {
+        font-weight: bold;
+      }
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    &.active,
+    &:hover {
+      .actions {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &:hover {
+      background-color: rgba($secondary, 0.05);
+    }
+
+    &.active {
+      background-color: rgba($primary, 0.1);
+
+      .title {
+        // font-weight: 500;
+      }
+    }
+
+    &.disabled {
+      color: $text-muted;
+    }
+  }
+
+  .children {
+    padding-left: 1rem;
+  }
+}
