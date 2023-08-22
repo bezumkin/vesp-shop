@@ -27,9 +27,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Category extends Model
 {
+    use Traits\RankedModel;
+
     protected $guarded = ['id', 'created_at', 'updated_at'];
     protected $casts = ['active' => 'boolean'];
     protected $hidden = ['remote_id'];
+    public static bool $updateUri = false;
 
     protected static function booted(): void
     {
@@ -39,7 +42,39 @@ class Category extends Model
                 array_unshift($uri, $model->parent->uri);
             }
             $model->uri = implode('/', $uri);
+
+            if (!self::$updateUri) {
+                self::$updateUri = $model->exists && ($model->isDirty('parent_id') || $model->isDirty('alias'));
+            }
         });
+
+
+        static::saved(static function (self $model) {
+            if (self::$updateUri) {
+                /** @var Product $product */
+                foreach ($model->products()->cursor() as $product) {
+                    $product->save();
+                }
+
+                /** @var Category $category */
+                foreach ($model->children()->cursor() as $category) {
+                    $category::$updateUri = true;
+                    $category->save();
+                }
+            }
+        });
+    }
+
+    protected function getCurrentRank(): int
+    {
+        $c = $this->newQuery();
+        if ($this->parent_id) {
+            $c->where('parent_id', $this->parent_id);
+        } else {
+            $c->whereNull('parent_id');
+        }
+
+        return $c->max('rank') + 1;
     }
 
     public function parent(): BelongsTo

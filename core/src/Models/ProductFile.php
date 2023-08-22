@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ProductFile extends Model
 {
     use Traits\CompositeKey;
+    use Traits\RankedModel;
 
     public $timestamps = false;
     public $incrementing = false;

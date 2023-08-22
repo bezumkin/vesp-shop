@@ -40,6 +40,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Product extends Model
 {
+    use Traits\RankedModel;
+
     protected $guarded = ['id', 'created_at', 'updated_at'];
     protected $casts = [
         'active' => 'boolean',
@@ -61,6 +63,11 @@ class Product extends Model
         static::saving(static function (self $model) {
             $model->uri = implode('/', [$model->category->uri, $model->alias]);
         });
+    }
+
+    protected function getCurrentRank(): int
+    {
+        return $this->newQuery()->where('category_id', $this->category_id)->max('rank') + 1;
     }
 
     public function category(): BelongsTo

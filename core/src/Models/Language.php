@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  */
 class Language extends Model
 {
+    use Traits\RankedModel;
+
     public $timestamps = false;
     protected $primaryKey = 'lang';
     protected $keyType = 'string';

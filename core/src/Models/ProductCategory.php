@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ProductCategory extends Model
 {
     use Traits\CompositeKey;
+    use Traits\RankedModel;
 
     public $timestamps = false;
     public $incrementing = false;

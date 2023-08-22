@@ -163,6 +163,7 @@ export default {
       if (oldParent !== newParent || oldIndex !== newIndex) {
         await this.$axios.post(this.url + '/' + id, {parent: newParent, rank: newIndex})
         await this.$fetch()
+        this.$root.$emit(`app::admin-products::update`)
       }
       this.$root.$emit(`app::categories-tree::sort`)
     },
