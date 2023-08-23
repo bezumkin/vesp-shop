@@ -169,26 +169,24 @@ export default {
 
 <style scoped lang="scss">
 .files {
-  border: 1px solid $light;
-  border-radius: $border-radius;
   transition: background-color 0.25s, border-color 0.25s;
   &-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
     min-height: 200px;
-    padding-bottom: 1rem;
   }
   &.drag-over {
     border-color: $success;
     background-color: rgba($success, 0.25);
   }
   .image-wrapper {
-    margin: 1rem 0 0 1rem;
     .image {
       border-radius: $border-radius;
       cursor: pointer;
       transition: opacity 0.25s;
+      width: 100%;
+      height: auto;
       &.disabled {
         opacity: 0.5;
         filter: grayscale(1);

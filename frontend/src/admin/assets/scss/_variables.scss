@@ -1,5 +1,24 @@
 // Your variables here
 
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    2xl: 1400px,
+    3xl: 1600px,
+) !default;
+
+$container-max-widths: (
+    sm: 540px,
+    md: 740px,
+    lg: 1060px,
+    xl: 1240px,
+    2xl: 1340px,
+    3xl: 1540px
+) !default;
+
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";

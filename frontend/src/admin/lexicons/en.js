@@ -64,6 +64,11 @@ export default {
     product: {
       title_one: 'Product',
       title_many: 'Products',
+      tab_main: 'Properties',
+      tab_files: 'Gallery',
+      tab_links: 'Links',
+      tab_categories: 'Categories',
+      file: 'Image',
       title: 'Title',
       subtitle: 'Subtitle',
       article: 'Article',

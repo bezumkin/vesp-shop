@@ -35,6 +35,12 @@ class Categories extends ModelController
                 $c->orWhere('description', 'LIKE', "%$query%");
             });
         }
+        if ($exclude = $this->getProperty('exclude')) {
+            if (!is_array($exclude)) {
+                $exclude = explode(',', $exclude);
+            }
+            $c->whereNotIn('id', array_map('intval', $exclude));
+        }
 
         return $c;
     }
