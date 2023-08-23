@@ -23,6 +23,11 @@ class ProductLink extends Model
     protected $primaryKey = ['product_id', 'link_id'];
     protected $guarded = [];
 
+    protected function getCurrentRank(): int
+    {
+        return $this->newQuery()->where('product_id', $this->product_id)->max('rank') + 1;
+    }
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

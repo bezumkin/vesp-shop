@@ -38,20 +38,7 @@
     </b-form-group>
 
     <b-form-group :label="$t('models.product.category')">
-      <vesp-input-combo-box
-        v-model="record.category_id"
-        url="admin/categories"
-        sort="rank"
-        :format-value="(item) => $translate(item.translations)"
-        required
-      >
-        <template #default="{item}">
-          <div :class="{'text-muted': !item.active}">
-            {{ $translate(item.translations) }}
-            <div class="small text-muted">{{ item.uri }}</div>
-          </div>
-        </template>
-      </vesp-input-combo-box>
+      <input-category v-model="record.category_id" />
     </b-form-group>
 
     <b-row>
@@ -154,10 +141,11 @@
 import InputAlias from '@/components/inputs/alias.vue'
 import Translations from '@/mixins/translations.js'
 import LangTabs from '@/components/lang-tabs.vue'
+import InputCategory from '@/components/inputs/category.vue'
 
 export default {
   name: 'FormProduct',
-  components: {LangTabs, InputAlias},
+  components: {InputCategory, LangTabs, InputAlias},
   mixins: [Translations],
   props: {
     value: {

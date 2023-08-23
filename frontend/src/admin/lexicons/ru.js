@@ -64,6 +64,11 @@ export default {
     product: {
       title_one: 'Товар',
       title_many: 'Товары',
+      tab_main: 'Свойства',
+      tab_files: 'Галерея',
+      tab_links: 'Связи',
+      tab_categories: 'Категории',
+      file: 'Картинка',
       title: 'Название',
       subtitle: 'Заголовок',
       article: 'Артикул',

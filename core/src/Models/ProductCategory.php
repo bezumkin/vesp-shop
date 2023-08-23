@@ -23,6 +23,11 @@ class ProductCategory extends Model
     protected $primaryKey = ['product_id', 'category_id'];
     protected $guarded = [];
 
+    protected function getCurrentRank(): int
+    {
+        return $this->newQuery()->where('category_id', $this->category_id)->max('rank') + 1;
+    }
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
