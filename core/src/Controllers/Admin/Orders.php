@@ -3,6 +3,8 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\UserAddress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Psr\Http\Message\ResponseInterface;
@@ -15,7 +17,31 @@ class Orders extends ModelController
 
     protected function beforeGet(Builder $c): Builder
     {
-        $c->with('orderProducts');
+        $c->with('orderProducts', 'orderProducts.product');
+        $c->with('address');
+
+        return $c;
+    }
+
+    protected function beforeCount(Builder $c): Builder
+    {
+        if ($query = trim($this->getProperty('query', ''))) {
+            $c->where(static function (Builder $c) use ($query) {
+                $c->whereHas('user', static function (Builder $c) use ($query) {
+                    $c->where('fullname', 'LIKE', "%$query%");
+                    $c->orWhere('username', 'LIKE', "%$query%");
+                });
+                $c->orWhere('num', 'LIKE', "$query%");
+            });
+        }
+
+        return $c;
+    }
+
+    protected function afterCount(Builder $c): Builder
+    {
+        $c->withCount('orderProducts');
+        $c->with('user:id,fullname,username');
 
         return $c;
     }
@@ -23,21 +49,44 @@ class Orders extends ModelController
     protected function beforeSave(Model $record): ?ResponseInterface
     {
         /** @var Order $record */
-        if ($record->paid && !$record->paid_at) {
-            $record->paid_at = time();
-        } elseif ($record->paid_at && !$record->paid) {
-            $record->paid_at = null;
+        if (!$this->getProperty('address_id')) {
+            $record->address_id = null;
         }
 
         return null;
     }
 
-    protected function beforeCount(Builder $c): Builder
+    protected function afterSave(Model $record): Model
     {
-        if ($query = $this->getProperty('query')) {
-            $c->where('title', 'LIKE', "%$query%");
+        /** @var Order $record */
+        $items = $this->getProperty('order_products');
+        if (is_array($items)) {
+            $ids = [];
+            foreach ($items as $item) {
+                if (!$orderProduct = $record->orderProducts()->find($item['id'])) {
+                    $orderProduct = new OrderProduct();
+                    $orderProduct->order_id = $record->id;
+                }
+                if (empty($item['options'])) {
+                    $item['options'] = null;
+                }
+                $orderProduct->fill($item);
+                $orderProduct->save();
+                $ids[] = $orderProduct->id;
+            }
+            $record->orderProducts()->whereNotIn('id', $ids)->delete();
         }
 
-        return $c;
+        if (!$record->address_id && $item = $this->getProperty('address')) {
+            if (is_array($item) && !empty($item)) {
+                /** @var UserAddress $address */
+                $address = $record->user->addresses()->create($item);
+                $record->address_id = $address->id;
+            }
+        }
+
+        $record->calculate();
+
+        return $record;
     }
 }

@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
- * @property int $order_id
- * @property int $product_id
- * @property string $title
- * @property float $price
+ * @property string $order_id
+ * @property ?int $product_id
+ * @property ?string $title
  * @property int $amount
- * @property float $total
+ * @property float $price
+ * @property float $weight
+ * @property float $discount
+ * @property array $options
  *
  * @property-read Order $order
  * @property-read Product $product
@@ -20,7 +22,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class OrderProduct extends Model
 {
     public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'order_id'];
+    protected $casts = [
+        'price' => 'float',
+        'weight' => 'float',
+        'discount' => 'float',
+        'options' => 'array',
+    ];
 
     public function order(): BelongsTo
     {

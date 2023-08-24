@@ -1,61 +1,85 @@
 <template>
   <div>
-    <b-form-group :label="$t('models.order.name')">
-      <b-form-input v-model.trim="record.name" required autofocus />
+    <b-row>
+      <b-col md="5">
+        <b-form-group :label="$t('models.order.num')">
+          <b-input-group prepend="#">
+            <b-form-input v-model.trim="record.num" :disabled="record.id > 0" autofocus />
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+      <b-col md="7">
+        <b-form-group :label="$t('models.order.created_at')">
+          <vesp-input-date-picker v-model="record.created_at" type="datetime" :disabled="record.id > 0" />
+        </b-form-group>
+      </b-col>
+    </b-row>
+
+    <b-form-group :label="$t('models.order.user')">
+      <vesp-input-combo-box v-model="record.user_id" url="admin/users" text-field="fullname" required>
+        <template #default="{item}">
+          {{ item.fullname }}
+          <div class="small text-muted">{{ item.username }}</div>
+        </template>
+      </vesp-input-combo-box>
     </b-form-group>
 
-    <b-form-group :label="$t('models.order.email')">
-      <b-form-input v-model.trim="record.email" required />
+    <b-form-group :label="$t('models.order.address')">
+      <vesp-input-combo-box
+        :key="'address-' + record.user_id"
+        v-model="record.address_id"
+        :url="record.user_id ? 'admin/users/' + record.user_id + '/addresses' : null"
+        :disabled="!record.user_id"
+        text-field="full_address"
+        sort="id"
+        @select="onSelectAddress"
+      >
+        <template #default="{item}">
+          {{ item.full_address }}
+          <div class="small text-muted">{{ item.receiver }}</div>
+        </template>
+      </vesp-input-combo-box>
     </b-form-group>
 
     <b-row>
-      <b-col md="4">
-        <b-form-group :label="$t('models.order.post')">
-          <b-form-input v-model.trim="record.post" type="number" min="0" max="999999" />
+      <b-col md="6">
+        <b-form-group :label="$t('models.order.cart')">
+          <b-form-input :value="$price(record.cart, null)" disabled />
         </b-form-group>
       </b-col>
-      <b-col md="8">
-        <b-form-group :label="$t('models.order.city')">
-          <b-form-input v-model.trim="record.city" />
+      <b-col md="6">
+        <b-form-group :label="$t('models.order.discount')">
+          <b-input-group prepend="-" :append="$t('shop.currency')">
+            <b-form-input v-model="record.discount" type="number" min="0" step="0.01" />
+          </b-input-group>
         </b-form-group>
       </b-col>
     </b-row>
 
-    <b-form-group :label="$t('models.order.address')">
-      <b-form-input v-model.trim="record.address" />
-    </b-form-group>
-
-    <b-row align-v="center">
-      <b-col cols="8">
+    <b-row>
+      <b-col md="6">
         <b-form-group :label="$t('models.order.total')">
-          <b-form-input v-model.trim="record.total" readonly />
+          <b-input-group prepend="=">
+            <b-form-input :value="$price(total)" disabled />
+          </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col cols="4" class="text-right">
-        <b-form-checkbox v-model.trim="record.paid">
-          {{ $t('models.order.paid') }}
-        </b-form-checkbox>
+      <b-col md="6">
+        <b-form-group :label="$t('models.order.weight')">
+          <b-form-input :value="$weight(record.weight)" disabled />
+        </b-form-group>
       </b-col>
     </b-row>
 
-    <div class="mt-2 pt-2 border-top">
-      <b-row v-for="product in record.order_products" :key="product.id" class="mt-3" align-v="center">
-        <b-col cols="6">
-          <b-link v-if="product.product_id" :to="{name: 'products-edit-id', params: {id: product.product_id}}">
-            {{ product.title }}
-          </b-link>
-          <div v-else>{{ product.title }}</div>
-          <div class="small text-muted">{{ product.price }} руб. x {{ product.amount }}</div>
-        </b-col>
-        <b-col cols="6" class="text-right">{{ product.total }} руб.</b-col>
-      </b-row>
-    </div>
+    <b-form-group :label="$t('models.order.comment')">
+      <b-form-textarea v-model.trim="record.comment" rows="5" autofocus />
+    </b-form-group>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FormProduct',
+  name: 'FormOrder',
   props: {
     value: {
       type: Object,
@@ -70,6 +94,20 @@ export default {
       set(newValue) {
         this.$emit('input', newValue)
       },
+    },
+    total() {
+      const total = Number(this.record.cart) - Number(this.record.discount)
+      return Number(total < 0 ? 0 : total).toFixed(2)
+    },
+  },
+  watch: {
+    'record.user_id'() {
+      this.record.address_id = null
+    },
+  },
+  methods: {
+    onSelectAddress(item) {
+      this.record.address = {...item}
     },
   },
 }

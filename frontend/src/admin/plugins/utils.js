@@ -17,4 +17,18 @@ export default ({app}, inject) => {
     }
     return text
   })
+
+  inject('price', (val) => {
+    if (val) {
+      return [Number(val).toFixed(2), app.i18n.t('shop.currency')].join(' ')
+    }
+    return ''
+  })
+
+  inject('weight', (val) => {
+    if (val) {
+      return [Number(val).toFixed(2), app.i18n.t('shop.weight')].join(' ')
+    }
+    return ''
+  })
 }

@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read UserRole $role
  * @property-read File $file
  * @property-read UserToken[] $tokens
+ * @property-read UserAddress[] $addresses
  * @property-read Order[] $orders
  */
 class User extends \Vesp\Models\User
@@ -98,6 +99,11 @@ class User extends \Vesp\Models\User
     public function tokens(): HasMany
     {
         return $this->hasMany(UserToken::class);
+    }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(UserAddress::class);
     }
 
     public function orders(): HasMany

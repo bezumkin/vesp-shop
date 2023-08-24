@@ -1,19 +1,9 @@
-<template>
-  <vesp-modal v-model="record" :url="url" :title="$t('models.order.title_one') + ' #' + record.id">
-    <template #form-fields>
-      <form-order v-model="record" />
-    </template>
-  </vesp-modal>
-</template>
-
 <script>
-import {url} from '../../orders'
-import FormOrder from '../../../components/forms/order'
+import Create, {url} from '../create'
 
-export {url}
 export default {
-  name: 'ProductCreatePage',
-  components: {FormOrder},
+  name: 'OrderEditPage',
+  extends: Create,
   validate({params}) {
     return /^\d+$/.test(params.id)
   },
@@ -23,20 +13,6 @@ export default {
       return {record}
     } catch (e) {
       error({statusCode: e.statusCode, message: e.data})
-    }
-  },
-  data() {
-    return {
-      url,
-      record: {
-        name: '',
-        email: '',
-        post: '',
-        city: '',
-        address: '',
-        total: '',
-        order_products: [],
-      },
     }
   },
 }

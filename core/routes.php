@@ -21,8 +21,10 @@ $group = $app->group(
             '/admin',
             static function (RouteCollectorProxy $group) {
                 $group->map(['OPTIONS', 'GET'], '/languages', App\Controllers\Admin\Languages::class);
-                $group->any('/users[/{id}]', App\Controllers\Admin\Users::class);
                 $group->any('/user-roles[/{id}]', App\Controllers\Admin\UserRoles::class);
+                $group->any('/users[/{id}]', App\Controllers\Admin\Users::class);
+                $group->any('/users/{user_id}/addresses[/{id}]', App\Controllers\Admin\User\Addresses::class);
+                $group->any('/users/{user_id}/orders[/{id}]', App\Controllers\Admin\User\Orders::class);
                 $group->any('/categories[/{id}]', App\Controllers\Admin\Categories::class);
                 $group->any('/products[/{id}]', App\Controllers\Admin\Products::class);
                 $group->any('/product/{product_id}/files[/{file_id}]', App\Controllers\Admin\Product\Files::class);

@@ -4,31 +4,92 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @property int $id
- * @property string $name
- * @property string $email
- * @property string $post
- * @property string $city
- * @property string $address
- * @property bool $paid
- * @property int $total
+ * @property string $uuid
+ * @property int $user_id
+ * @property int $address_id
+ * @property string $num
+ * @property float $total
+ * @property float $cart
+ * @property float $discount
+ * @property float $weight
+ * @property string $comment
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @property Carbon $paid_at
  *
+ * @property-read User $user
+ * @property-read UserAddress $address
  * @property-read OrderProduct[] $orderProducts
+ * @property-read Product[] $products
  */
 class Order extends Model
 {
-    protected $casts = ['paid' => 'boolean'];
-    protected $guarded = ['id', 'created_at', 'updated_at', 'paid_at'];
-    protected $dates = ['paid_at'];
+    protected $fillable = ['user_id', 'address_id', 'discount', 'comment', 'created_at'];
+    protected $casts = [
+        'total' => 'float',
+        'cart' => 'float',
+        'discount' => 'float',
+        'delivery' => 'float',
+        'weight' => 'float',
+    ];
+
+    protected static function booted(): void
+    {
+        static::saving(static function (self $model) {
+            if (!$model->uuid) {
+                $model->uuid = Uuid::uuid4();
+            }
+            if (!$model->created_at) {
+                $model->created_at = Carbon::now();
+            }
+            if (!$model->num) {
+                $time = $model->created_at->timestamp;
+                $count = $model->newQuery()->where('created_at', 'LIKE', date('Y-m-', $time) . '%')->count();
+                $model->num = implode('/', [date('ym', $time), $count + 1]);
+            }
+        });
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(UserAddress::class);
+    }
 
     public function orderProducts(): HasMany
     {
         return $this->hasMany(OrderProduct::class);
+    }
+
+    public function products(): HasManyThrough
+    {
+        return $this->hasManyThrough(Product::class, OrderProduct::class, 'order_id', 'id', 'id', 'product_id');
+    }
+
+    public function calculate(): void
+    {
+        $cart = 0;
+        $weight = 0;
+        /** @var OrderProduct $orderProduct */
+        foreach ($this->orderProducts()->cursor() as $orderProduct) {
+            $cart += $orderProduct->amount * ($orderProduct->price - $orderProduct->discount);
+            $weight += $orderProduct->amount * $orderProduct->weight;
+        }
+        $total = $cart - $this->discount;
+
+        $this->weight = $weight;
+        $this->cart = max($cart, 0);
+        $this->total = max($total, 0);
+        $this->save();
     }
 }

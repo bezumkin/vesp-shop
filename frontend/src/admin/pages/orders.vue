@@ -2,6 +2,7 @@
   <div>
     <vesp-table
       :url="url"
+      :header-actions="headerActions"
       :table-actions="tableActions"
       :fields="fields"
       :filters="filters"
@@ -26,8 +27,8 @@ export default {
       filters: {
         query: '',
       },
-      sort: 'id',
-      dir: 'asc',
+      sort: 'num',
+      dir: 'desc',
     }
   },
   head() {
@@ -36,6 +37,9 @@ export default {
     }
   },
   computed: {
+    headerActions() {
+      return [{route: 'orders-create', icon: 'plus', title: this.$t('actions.create')}]
+    },
     tableActions() {
       return [
         {route: 'orders-edit-id', icon: 'edit', title: this.$t('actions.edit')},
@@ -44,12 +48,14 @@ export default {
     },
     fields() {
       return [
-        {key: 'id', label: this.$t('components.table.columns.id')},
-        {key: 'name', label: this.$t('models.order.name')},
-        {key: 'total', label: this.$t('models.order.total')},
+        {key: 'num', label: this.$t('models.order.num'), sortable: true},
+        {key: 'user.fullname', label: this.$t('models.order.user')},
+        {key: 'total', label: this.$t('models.order.total'), sortable: true, formatter: this.$price},
+        {key: 'discount', label: this.$t('models.order.discount'), formatter: this.$price, sortable: true},
+        {key: 'order_products_count', label: this.$t('models.order.products'), sortable: true},
         {
           key: 'created_at',
-          label: this.$t('components.table.columns.created_at'),
+          label: this.$t('models.order.created_at'),
           formatter: this.$options.filters.datetime,
           sortable: true,
         },
