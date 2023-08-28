@@ -40,9 +40,10 @@ $group = $app->group(
         $group->group(
             '/web',
             static function (RouteCollectorProxy $group) {
-                $group->any('/categories[/{alias}]', App\Controllers\Web\Categories::class);
-                $group->any('/categories/{category}/products[/{alias}]', App\Controllers\Web\Category\Products::class);
-                $group->any('/products', App\Controllers\Web\Products::class);
+                $group->any('/resource/{uri:.+}', App\Controllers\Web\Resource::class);
+                $group->any('/categories[/{uri:.+}]', App\Controllers\Web\Categories::class);
+                $group->any('/category/{category_id}/products', App\Controllers\Web\Category\Products::class);
+                $group->any('/products[/{uri:.+}]', App\Controllers\Web\Products::class);
                 $group->any('/orders', App\Controllers\Web\Orders::class);
             }
         );

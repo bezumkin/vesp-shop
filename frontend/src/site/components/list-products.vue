@@ -2,7 +2,7 @@
   <b-overlay :show="loading" opacity="0.5">
     <template v-if="listView">
       <div v-for="product in products" :key="product.id" class="d-flex mt-2 align-items-center">
-        <b-link :to="getLink(product)">
+        <b-link :to="$productLink(product)">
           <div class="image mr-2">
             <b-img
               v-if="product.file.id"
@@ -14,17 +14,17 @@
             />
           </div>
         </b-link>
-        <b-link :to="getLink(product)" class="font-weight-bold">{{ product.title }}</b-link>
+        <b-link :to="$productLink(product)" class="font-weight-bold">{{ $translate(product.translations) }}</b-link>
         <b-button variant="light" size="sm" class="ml-auto" @click="$store.commit('addToCart', product)">
           <fa icon="cart-shopping" class="mr-1" />
-          {{ product.price }} руб.
+          {{ $price(product.price) }}
         </b-button>
       </div>
     </template>
     <template v-else>
       <b-row>
         <b-col v-for="product in products" :key="product.id" md="6" lg="4">
-          <b-link :to="getLink(product)">
+          <b-link :to="$productLink(product)">
             <div class="image">
               <b-img
                 v-if="product.file.id"
@@ -38,10 +38,10 @@
             </div>
           </b-link>
           <div class="d-flex justify-content-between align-items-center mt-2">
-            <b-link :to="getLink(product)" class="font-weight-bold">{{ product.title }}</b-link>
+            <b-link :to="$productLink(product)" class="font-weight-bold">{{ $translate(product.translations) }}</b-link>
             <b-button variant="light" size="sm" @click="$store.commit('addToCart', product)">
               <fa icon="cart-shopping" class="mr-1" />
-              {{ product.price }} руб.
+              {{ $price(product.price) }}
             </b-button>
           </div>
         </b-col>
@@ -59,7 +59,7 @@ export default {
       default: 1,
     },
     category: {
-      type: String,
+      type: [String, Number],
       default: null,
     },
     listView: {
@@ -111,7 +111,7 @@ export default {
       },
     },
     url() {
-      return this.category ? 'web/categories/' + this.category + '/products' : 'web/products'
+      return this.category ? 'web/category/' + this.category + '/products' : 'web/products'
     },
     thumbWidth() {
       return this.listView ? 100 : 300
@@ -138,11 +138,6 @@ export default {
       this.$fetch()
     },
   },
-  methods: {
-    getLink(product) {
-      return {name: 'category-product', params: {category: product.category.alias, product: product.alias}}
-    },
-  },
 }
 </script>
 
@@ -165,6 +160,9 @@ export default {
   .image {
     min-width: 300px;
     min-height: 200px;
+  }
+  .btn-light {
+    white-space: nowrap;
   }
 }
 </style>

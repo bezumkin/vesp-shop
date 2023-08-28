@@ -19,9 +19,9 @@
         </b-carousel>
       </b-col>
       <b-col md="6" class="order-1 order-md-2">
-        <h1>{{ product.title }}</h1>
-        <div class="mt-3">{{ product.description }}</div>
-        <div class="font-weight-bold mt-3">{{ product.price }} руб.</div>
+        <h1>{{ $translate(product.translations) }}</h1>
+        <div class="mt-3" v-html="$translate(product.translations, 'content')" />
+        <div class="font-weight-bold mt-3">{{ $price(product.price) }}</div>
         <div class="mt-3">
           <b-button variant="primary" @click="$store.commit('addToCart', product)">В корзину!</b-button>
         </div>
@@ -34,28 +34,21 @@
 import Breadcrumbs from '~/components/breadcrumbs'
 
 export default {
-  name: 'ProductPage',
+  name: 'Product',
   components: {Breadcrumbs},
-  validate({params}) {
-    return params.category && params.product
-  },
-  async asyncData({app, params, error}) {
-    try {
-      const {data} = await app.$axios.get('web/categories/' + params.category + '/products/' + params.product)
-      return {product: data}
-    } catch (e) {
-      error({statusCode: e.response.status, message: e.message})
-    }
-  },
-  data() {
-    return {
-      thumbWidth: 540,
-      thumbHeight: 360,
-      product: {
-        category: {},
-        product_files: [],
-      },
-    }
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+    thumbWidth: {
+      type: [Number, String],
+      default: 540,
+    },
+    thumbHeight: {
+      type: [Number, String],
+      default: 360,
+    },
   },
 }
 </script>

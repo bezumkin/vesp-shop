@@ -24,17 +24,20 @@ Config.head.link = [
   {rel: 'apple-touch-icon', sizes: '180x180', href: '/favicons/apple-touch-icon.png'},
   {rel: 'manifest', href: '/favicons/site.webmanifest'},
 ]
+Config.publicRuntimeConfig = {
+  PRODUCTS_PREFIX: env.PRODUCTS_PREFIX,
+}
 
 Config.buildModules = ['@nuxtjs/style-resources', '@nuxtjs/eslint-module', '@nuxtjs/fontawesome']
-Config.modules = ['bootstrap-vue/nuxt', '@nuxtjs/axios', '@nuxtjs/pwa', '@vesp/frontend']
-Config.Vesp = {
-  components: false,
-  scss: false,
-  i18n: false,
-  axios: false,
-  utils: true,
-  filters: false,
-}
+Config.modules = [...Config.modules, '@vesp/frontend']
+Config.plugins = ['../admin/plugins/utils.js', '~/plugins/utils.js']
+
+Config.i18n.vueI18n = '~/lexicons/index.js'
+Config.i18n.defaultLocale = 'ru'
+Config.i18n.locales = [
+  {code: 'ru', title: 'Русский'},
+  {code: 'en', title: 'English'},
+]
 
 Config.pwa = {
   icon: {

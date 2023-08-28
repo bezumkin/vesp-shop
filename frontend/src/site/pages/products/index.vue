@@ -6,7 +6,7 @@
 import Category from '~/components/category.vue'
 
 export default {
-  name: 'IndexPage',
+  name: 'ProductsPage',
   components: {Category},
 }
 </script>

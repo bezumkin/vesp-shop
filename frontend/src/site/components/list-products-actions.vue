@@ -9,9 +9,9 @@
     <b-col md="8" class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start">
       <div class="mr-2 ml-md-auto">Сортировка:</div>
       <b-button-group>
-        <b-button :pressed="sort === 'title'" variant="outline-secondary" @click="onSort('title')">
-          По названию
-          <template v-if="sort === 'title' && dir === 'desc'">&uarr;</template>
+        <b-button :pressed="sort === 'created_at'" variant="outline-secondary" @click="onSort('created_at')">
+          По дате
+          <template v-if="sort === 'created_at' && dir === 'desc'">&uarr;</template>
           <template v-else>&darr;</template>
         </b-button>
         <b-button :pressed="sort === 'price'" variant="outline-secondary" @click="onSort('price')">

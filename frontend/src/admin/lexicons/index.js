@@ -6,7 +6,7 @@ import localRu from './ru'
 
 export default () => {
   return {
-    fallbackLocale: 'en',
+    fallbackLocale: 'ru',
     messages: {
       en: merge(vespEn, localEn),
       ru: merge(vespRu, localRu),

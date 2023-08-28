@@ -4,9 +4,10 @@ namespace App\Controllers\Web;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
-use Vesp\Controllers\ModelController;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Vesp\Controllers\ModelGetController;
 
-class Products extends ModelController
+class Products extends ModelGetController
 {
     protected $model = Product::class;
 
@@ -17,16 +18,31 @@ class Products extends ModelController
             $c->where('active', true);
         });
 
+        $c->with('translations');
+        $c->with('category:id,uri,active', 'category.translations:category_id,lang,title');
+        $c->with('productFiles', static function (HasMany $c) {
+            $c->where('active', true);
+            $c->orderBy('rank');
+            $c->select('product_id', 'file_id');
+            $c->with('file:id,updated_at');
+        });
+
         return $c;
     }
 
     protected function beforeCount(Builder $c): Builder
     {
-        return $this->beforeGet($c);
+        $c->where('active', true);
+        $c->whereHas('category', static function (Builder $c) {
+            $c->where('active', true);
+        });
+
+        return $c;
     }
 
     protected function afterCount(Builder $c): Builder
     {
+        $c->with('translations:product_id,lang,title');
         $c->with('category:id,uri,active', 'category.translations:category_id,lang,title');
         $c->with('firstFile');
 
@@ -35,6 +51,10 @@ class Products extends ModelController
 
     protected function getPrimaryKey(): ?array
     {
+        if ($uri = $this->getProperty('uri')) {
+            return ['uri' => $uri];
+        }
+
         return null;
     }
 }

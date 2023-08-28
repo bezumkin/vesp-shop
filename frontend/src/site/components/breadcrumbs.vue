@@ -1,17 +1,13 @@
 <template>
   <b-breadcrumb>
-    <b-breadcrumb-item :to="{name: 'index'}">
+    <b-breadcrumb-item :to="{name: 'products'}">
       <fa icon="home" />
     </b-breadcrumb-item>
-    <b-breadcrumb-item :to="{name: 'category', params: {category: category.alias}}" :active="!product">
-      {{ category.title }}
+    <b-breadcrumb-item :to="$productLink(category)" :active="!product">
+      {{ $translate(category.translations) }}
     </b-breadcrumb-item>
-    <b-breadcrumb-item
-      v-if="product"
-      :to="{name: 'category-product', params: {category: category.alias, product: product.alias}}"
-      active
-    >
-      {{ product.title }}
+    <b-breadcrumb-item v-if="product" active>
+      {{ $translate(product.translations) }}
     </b-breadcrumb-item>
   </b-breadcrumb>
 </template>

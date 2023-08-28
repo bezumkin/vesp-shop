@@ -9,31 +9,16 @@ use Psr\Http\Message\ResponseInterface;
 
 class Products extends \App\Controllers\Web\Products
 {
-    /** @var Category $category */
-    protected $category;
+    protected ?Category $category;
 
     public function checkScope(string $method): ?ResponseInterface
     {
-        $c = Category::query()->where(['active' => true, 'uri' => $this->getProperty('category')]);
+        $c = Category::query()->where(['active' => true, 'id' => $this->getProperty('category_id')]);
         if (!$this->category = $c->first()) {
             return $this->failure('', 404);
         }
 
         return null;
-    }
-
-    protected function beforeGet(Builder $c): Builder
-    {
-        $c->where('active', true);
-        $c->with('category:id,uri,active', 'category.translations:category_id,lang,title');
-        $c->with('productFiles', static function (HasMany $c) {
-            $c->where('active', true);
-            $c->orderBy('rank');
-            $c->select('product_id', 'file_id');
-            $c->with('file:id,updated_at');
-        });
-
-        return $c;
     }
 
     protected function beforeCount(Builder $c): Builder
@@ -45,10 +30,6 @@ class Products extends \App\Controllers\Web\Products
 
     protected function getPrimaryKey(): ?array
     {
-        if ($alias = $this->getProperty('alias')) {
-            return ['alias' => $alias, 'category_id' => $this->category->id];
-        }
-
         return null;
     }
 }

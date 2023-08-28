@@ -1,12 +1,12 @@
 <template>
   <div>
-    <breadcrumbs :category="category" />
+    <breadcrumbs v-if="category" :category="category" />
 
     <list-products-actions v-model="listView" :sort.sync="sort" :dir.sync="dir" />
 
     <list-products
       v-model="page"
-      :category="$route.params.category"
+      :category="category ? category.id : null"
       :limit="limit"
       :sort="sort"
       :dir="dir"
@@ -19,31 +19,25 @@
 </template>
 
 <script>
-import ListProducts from '../../components/list-products'
-import ListProductsActions from '../../components/list-products-actions'
+import ListProducts from '~/components/list-products'
+import ListProductsActions from '~/components/list-products-actions'
 import Breadcrumbs from '~/components/breadcrumbs'
 
 export default {
   components: {Breadcrumbs, ListProductsActions, ListProducts},
-  validate({params}) {
-    return Boolean(params.category)
-  },
-  async asyncData({app, params, error}) {
-    try {
-      const {data} = await app.$axios.get('web/categories/' + params.category)
-      return {category: data}
-    } catch (e) {
-      error({statusCode: e.response.status, message: e.message})
-    }
+  props: {
+    category: {
+      type: Object,
+      default: null,
+    },
   },
   data() {
     return {
       page: 1,
       total: 0,
-      sort: 'title',
+      sort: 'created_at',
       dir: 'asc',
       listView: false,
-      category: {},
     }
   },
   computed: {
