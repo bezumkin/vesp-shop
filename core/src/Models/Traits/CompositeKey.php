@@ -57,8 +57,8 @@ trait CompositeKey
     {
         $me = new self();
         $query = $me->newQuery();
-        foreach ($me->getKeyName() as $key) {
-            $query->where($key, '=', $ids[$key]);
+        foreach ($me->getKey() as $key) {
+            $query->where($key, $ids[$key]);
         }
 
         return $query->first($columns);
