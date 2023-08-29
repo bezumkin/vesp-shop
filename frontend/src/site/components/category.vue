@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs v-if="category" :category="category" />
+    <breadcrumbs v-if="category && category.breadcrumbs" :categories="category.breadcrumbs" />
 
     <list-products-actions v-model="listView" :sort.sync="sort" :dir.sync="dir" />
 

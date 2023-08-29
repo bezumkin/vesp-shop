@@ -101,4 +101,50 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public static function getChildIds(int $parentId, bool $onlyActive = false): array
+    {
+        $ids = [];
+
+        $children = self::query()->where('parent_id', $parentId)->select('id');
+        if ($onlyActive) {
+            $children->where('active', true);
+        }
+        foreach ($children->cursor() as $child) {
+            $ids = [...$ids, $child->id, ...self::getChildIds($child->id, $onlyActive)];
+        }
+
+        return $ids;
+    }
+
+    public static function getParentIds(int $childId, bool $onlyActive = false): array
+    {
+        $ids = [];
+
+        $child = self::query()->where('id', $childId)->select('parent_id');
+        if ($onlyActive) {
+            $child->where('active', true);
+        }
+        if ($parentId = $child->value('parent_id')) {
+            $ids = [$parentId, ...self::getParentIds($parentId)];
+        }
+
+        return $ids;
+    }
+
+    public static function getBreadcrumbs(int $categoryId, bool $onlyActive = true): array
+    {
+        $ids = [$categoryId, ...self::getParentIds($categoryId)];
+
+        $breadcrumbs = self::query()
+            ->select('id', 'uri')
+            ->whereIn('id', $ids)
+            ->with('translations:category_id,lang,title')
+            ->orderByRaw('FIELD(id, ' . implode(',', $ids) . ')');
+        if ($onlyActive) {
+            $breadcrumbs->where('active', true);
+        }
+
+        return $breadcrumbs->get()->toArray();
+    }
 }

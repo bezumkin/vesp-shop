@@ -23,7 +23,16 @@ class Products extends \App\Controllers\Web\Products
 
     protected function beforeCount(Builder $c): Builder
     {
-        $c->where(['active' => true, 'category_id' => $this->category->id]);
+        $c->where('active', true);
+        $c->where(function (Builder $c) {
+            $c->where('category_id', $this->category->id);
+            if ($children = Category::getChildIds($this->category->id, true)) {
+                $c->orWhereIn('category_id', $children);
+            }
+            $c->orWhereHas('productCategories', function (Builder $c) {
+                $c->where('category_id', $this->category->id);
+            });
+        });
 
         return $c;
     }

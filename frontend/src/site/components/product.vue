@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs :category="product.category" :product="product" />
+    <breadcrumbs v-if="product.breadcrumbs" :categories="product.breadcrumbs" :product="product" />
 
     <b-row class="mt-3">
       <b-col v-if="product.product_files.length" md="6" class="mt-3 mt-md-0 order-2 order-md-1">

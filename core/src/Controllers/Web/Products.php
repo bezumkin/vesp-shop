@@ -2,8 +2,10 @@
 
 namespace App\Controllers\Web;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Vesp\Controllers\ModelGetController;
 
@@ -47,6 +49,17 @@ class Products extends ModelGetController
         $c->with('firstFile');
 
         return $c;
+    }
+
+    public function prepareRow(Model $object): array
+    {
+        /** @var Product $object */
+        $array = $object->toArray();
+        if ($this->getPrimaryKey()) {
+            $array['breadcrumbs'] = Category::getBreadcrumbs($object->category_id);
+        }
+
+        return $array;
     }
 
     protected function getPrimaryKey(): ?array

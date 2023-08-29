@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\Traits\TranslateModelController;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,9 @@ class Products extends ModelController
         if ($category = (int)$this->getProperty('category')) {
             $c->where(static function (Builder $c) use ($category) {
                 $c->where('category_id', $category);
+                if ($children = Category::getChildIds($category)) {
+                    $c->orWhereIn('category_id', $children);
+                }
                 $c->orWhereHas('productCategories', static function (Builder $c) use ($category) {
                     $c->where('category_id', $category);
                 });

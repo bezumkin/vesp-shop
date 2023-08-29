@@ -4,6 +4,7 @@ namespace App\Controllers\Web;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Vesp\Controllers\ModelGetController;
 
 class Categories extends ModelGetController
@@ -28,6 +29,17 @@ class Categories extends ModelGetController
         $c->with('translations:category_id,lang,title');
 
         return $c;
+    }
+
+    public function prepareRow(Model $object): array
+    {
+        /** @var Category $object */
+        $array = $object->toArray();
+        if ($this->getPrimaryKey()) {
+            $array['breadcrumbs'] = Category::getBreadcrumbs($object->id);
+        }
+
+        return $array;
     }
 
     protected function getPrimaryKey(): ?array
