@@ -19,6 +19,7 @@
     "ext-pdo": "*",
     "akrabat/ip-address-middleware": "^2.1",
     "fenom/fenom": "^3.0",
+    "k-samuel/faceted-search": "^3.1",
     "pelago/emogrifier": "^7.0",
     "peppeocchi/php-cron-scheduler": "^4.0",
     "phpmailer/phpmailer": "^6.8",

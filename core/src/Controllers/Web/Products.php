@@ -4,6 +4,7 @@ namespace App\Controllers\Web;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\CategoryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -35,9 +36,15 @@ class Products extends ModelGetController
     protected function beforeCount(Builder $c): Builder
     {
         $c->where('active', true);
-        $c->whereHas('category', static function (Builder $c) {
-            $c->where('active', true);
-        });
+        if ($filters = $this->getProperty('filters')) {
+            $service = new CategoryFilter();
+            $ids = $service->getProducts(json_decode($filters, true));
+            $c->whereIn('id', $ids);
+        } else {
+            $c->whereHas('category', static function (Builder $c) {
+                $c->where('active', true);
+            });
+        }
 
         return $c;
     }

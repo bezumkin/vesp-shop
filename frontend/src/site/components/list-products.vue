@@ -1,5 +1,10 @@
 <template>
   <b-overlay :show="loading" opacity="0.5">
+    <template v-if="!loading && !products.length">
+      <div class="alert alert-info p-5 text-center">
+        {{ $t('filters.no_results') }}
+      </div>
+    </template>
     <template v-if="listView">
       <div v-for="product in products" :key="product.id" class="d-flex mt-2 align-items-center">
         <b-link :to="$productLink(product)">
@@ -62,6 +67,10 @@ export default {
       type: [String, Number],
       default: null,
     },
+    filters: {
+      type: Object,
+      default: null,
+    },
     listView: {
       type: Boolean,
       default: false,
@@ -86,11 +95,13 @@ export default {
       products: [],
     }
   },
-  fetchOnServer: false,
   async fetch() {
     this.loading = true
     try {
       const params = {limit: this.limit, page: this.page, sort: this.sort, dir: this.dir}
+      if (Object.keys(this.filters).length) {
+        params.filters = JSON.stringify(this.filters)
+      }
       const {data} = await this.$axios.get(this.url, {params})
       this.products = data.rows
       this.total = data.total
@@ -121,9 +132,6 @@ export default {
     },
   },
   watch: {
-    page() {
-      this.$fetch()
-    },
     limit() {
       if (this.page !== 1) {
         this.page = 1
@@ -131,11 +139,12 @@ export default {
         this.$fetch()
       }
     },
-    sort() {
-      this.$fetch()
-    },
-    dir() {
-      this.$fetch()
+    page: '$fetch',
+    sort: '$fetch',
+    dir: '$fetch',
+    filters: {
+      handler: '$fetch',
+      deep: true,
     },
   },
 }
@@ -152,17 +161,13 @@ export default {
   border-radius: $border-radius;
   overflow: hidden;
 }
+.btn-light {
+  white-space: nowrap;
+}
 .row {
   margin: -1rem 0 0 -1rem;
   & > div {
     padding: 1rem 0 0 1rem;
-  }
-  .image {
-    min-width: 300px;
-    min-height: 200px;
-  }
-  .btn-light {
-    white-space: nowrap;
   }
 }
 </style>

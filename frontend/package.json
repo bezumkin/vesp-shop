@@ -27,6 +27,7 @@
     "@vesp/frontend": "^0.x",
     "concurrently": "^6.0.0",
     "deepmerge": "^4.2.2",
+    "nouislider": "^15.7.1",
     "pm2": "^4.5.5",
     "slugify": "^1.6.5",
     "sortablejs": "^1.15.0",

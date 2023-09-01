@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa332813319ffc5fbe88bc012e4d4dbb",
+    "content-hash": "c83c7696d20f531683ebc8943097c1fd",
     "packages": [
         {
             "name": "akrabat/ip-address-middleware",
@@ -1359,6 +1359,57 @@
                 }
             ],
             "time": "2022-05-21T17:30:32+00:00"
+        },
+        {
+            "name": "k-samuel/faceted-search",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/k-samuel/faceted-search.git",
+                "reference": "ab8a3bbd06e1cae5af417a485654de7b74d21d9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/k-samuel/faceted-search/zipball/ab8a3bbd06e1cae5af417a485654de7b74d21d9f",
+                "reference": "ab8a3bbd06e1cae5af417a485654de7b74d21d9f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0"
+            },
+            "require-dev": {
+                "codacy/coverage": "dev-master",
+                "phpbench/phpbench": "^1.2",
+                "phpstan/phpstan": "^1",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "KSamuel\\FacetedSearch\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Yegorov",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Faceted search",
+            "homepage": "https://github.com/k-samuel/faceted-search",
+            "keywords": [
+                "faceted search",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/k-samuel/faceted-search/issues",
+                "source": "https://github.com/k-samuel/faceted-search"
+            },
+            "time": "2023-06-14T20:01:33+00:00"
         },
         {
             "name": "laravel/serializable-closure",

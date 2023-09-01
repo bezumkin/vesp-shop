@@ -43,7 +43,9 @@ $group = $app->group(
                 $group->any('/resource/{uri:.+}', App\Controllers\Web\Resource::class);
                 $group->any('/categories[/{uri:.+}]', App\Controllers\Web\Categories::class);
                 $group->any('/category/{category_id}/products', App\Controllers\Web\Category\Products::class);
+                $group->any('/category/{category_id}/filters', App\Controllers\Web\Category\Filters::class);
                 $group->any('/products[/{uri:.+}]', App\Controllers\Web\Products::class);
+                $group->any('/filters', App\Controllers\Web\Filters::class);
                 $group->any('/orders', App\Controllers\Web\Orders::class);
             }
         );

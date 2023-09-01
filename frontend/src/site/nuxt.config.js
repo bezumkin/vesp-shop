@@ -68,6 +68,8 @@ Config.bootstrapVue.componentPlugins = [
   'FormPlugin',
   'FormGroupPlugin',
   'FormInputPlugin',
+  'FormCheckboxPlugin',
+  'FormSelectPlugin',
   'SpinnerPlugin',
 ]
 

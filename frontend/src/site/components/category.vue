@@ -4,17 +4,25 @@
 
     <list-products-actions v-model="listView" :sort.sync="sort" :dir.sync="dir" />
 
-    <list-products
-      v-model="page"
-      :category="category ? category.id : null"
-      :limit="limit"
-      :sort="sort"
-      :dir="dir"
-      :list-view="listView"
-      @load="onLoad"
-    />
+    <b-row>
+      <b-col md="4" lg="3">
+        <list-products-filters v-model="filters" :category="category ? category.id : null" />
+      </b-col>
+      <b-col md="8" lg="9">
+        <list-products
+          v-model="page"
+          :filters="filters"
+          :category="category ? category.id : null"
+          :limit="limit"
+          :sort="sort"
+          :dir="dir"
+          :list-view="listView"
+          @load="onLoad"
+        />
 
-    <b-pagination v-if="total > limit" v-model="page" :total-rows="total" :per-page="limit" class="mt-5" />
+        <b-pagination v-if="total > limit" v-model="page" :total-rows="total" :per-page="limit" class="mt-5" />
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -22,9 +30,10 @@
 import ListProducts from '~/components/list-products'
 import ListProductsActions from '~/components/list-products-actions'
 import Breadcrumbs from '~/components/breadcrumbs'
+import ListProductsFilters from '~/components/list-products-filters.vue'
 
 export default {
-  components: {Breadcrumbs, ListProductsActions, ListProducts},
+  components: {ListProductsFilters, Breadcrumbs, ListProductsActions, ListProducts},
   props: {
     category: {
       type: Object,
@@ -38,11 +47,16 @@ export default {
       sort: 'created_at',
       dir: 'asc',
       listView: false,
+      filters: {},
     }
   },
   computed: {
     limit() {
-      return this.listView ? 10 : 9
+      if (this.category) {
+        return this.listView ? 10 : 9
+      }
+
+      return this.listView ? 20 : 18
     },
   },
   methods: {
