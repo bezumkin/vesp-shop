@@ -54,6 +54,7 @@ export default {
       filters: {},
       selected: this.value || {},
       ranges: {},
+      state: '{}',
     }
   },
   async fetch() {
@@ -100,17 +101,22 @@ export default {
             delete newValue[key]
           }
         })
-        this.$emit('input', newValue)
-        this.onFilter()
+
+        const state = JSON.stringify(newValue)
+        if (this.state !== state) {
+          this.state = state
+          this.$emit('input', newValue)
+          this.onFilter(newValue)
+        }
       },
       deep: true,
     },
   },
   methods: {
-    async onFilter() {
+    async onFilter(selected) {
       this.loading = true
       try {
-        const {data} = await this.$axios.post(this.url, this.selected)
+        const {data} = await this.$axios.post(this.url, selected)
         this.setAmount(data.rows)
       } catch (e) {
       } finally {

@@ -69,7 +69,9 @@ export default {
     },
     filters: {
       type: Object,
-      default: null,
+      default() {
+        return {}
+      },
     },
     listView: {
       type: Boolean,
