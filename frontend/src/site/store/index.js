@@ -1,57 +1,102 @@
 export const state = () => ({
-  cart: [],
+  cartId: null,
+  cartProducts: [],
 })
 
 export const mutations = {
-  addToCart(state, product) {
-    state.cart.push({id: product.id, title: product.title, price: product.price})
-    this.dispatch('saveCart')
+  cartId(state, payload) {
+    state.cartId = payload
   },
-  removeFromCart(state, product) {
-    const idx = state.cart.findIndex((i) => i.id === product.id)
-    if (idx > -1) {
-      state.cart.splice(idx, 1)
-    }
-    this.dispatch('saveCart')
-  },
-  clearCart(state) {
-    state.cart = []
-    this.dispatch('saveCart')
+  cartProducts(state, payload) {
+    state.cartProducts = payload
   },
 }
 
 export const getters = {
   cartProducts(state) {
-    return state.cart.length
+    let amount = 0
+    state.cartProducts.forEach((i) => {
+      amount += i.amount
+    })
+    return amount
   },
   cartTotal(state) {
     let total = 0
-    state.cart.forEach((i) => {
-      total += i.price
+    state.cartProducts.forEach((i) => {
+      total += i.product.price * i.amount
     })
-    return total ? total.toFixed(2) : 0
-  },
-  products(state) {
-    const products = {}
-    state.cart.forEach((i) => {
-      if (!products[i.id]) {
-        products[i.id] = {...i, amount: 1}
-      } else {
-        products[i.id].amount += 1
-      }
-    })
-    return Object.values(products)
+    return Number(total.toFixed(2))
   },
 }
 
 export const actions = {
-  saveCart({state}) {
-    localStorage.setItem('cart', JSON.stringify(state.cart))
+  async getCartId({state, commit, dispatch}, create = true) {
+    if (!state.cartId) {
+      if (this.$auth.loggedIn && this.$auth.user.cart) {
+        commit('cartId', this.$auth.user.cart)
+      } else if (localStorage.getItem('cartId')) {
+        commit('cartId', localStorage.getItem('cartId'))
+      } else if (create) {
+        try {
+          const {data} = await this.$axios.put('web/cart')
+          commit('cartId', data.id)
+          dispatch('saveCartId')
+        } catch (e) {}
+      }
+    }
+    return state.cartId
   },
-  loadCart({state, commit}) {
-    const products = JSON.parse(localStorage.getItem('cart')) || []
-    products.forEach((product) => {
-      commit('addToCart', product)
-    })
+  async loadCart({dispatch, commit}) {
+    const cartId = await dispatch('getCartId', false)
+    if (cartId) {
+      try {
+        const {data} = await this.$axios.get('web/cart/' + cartId + '/products')
+        commit('cartProducts', data.rows)
+      } catch (e) {}
+    }
+  },
+  async addToCart({commit, dispatch}, item) {
+    const cartId = await dispatch('getCartId')
+    try {
+      const params = {id: item.id, amount: item.amount || 1, options: item.options || null}
+      const {data} = await this.$axios.put('web/cart/' + cartId + '/products', params)
+      commit('cartProducts', data.rows)
+    } catch (e) {}
+  },
+  async removeFromCart({state, commit, dispatch}, product) {
+    const cartId = await dispatch('getCartId')
+    try {
+      const {data} = await this.$axios.delete('web/cart/' + cartId + '/products/' + product.product_key)
+      commit('cartProducts', data.rows)
+    } catch (e) {}
+  },
+  async changeAmount({state, commit, dispatch}, product) {
+    const cartId = await dispatch('getCartId')
+    if (product.amount <= 0) {
+      return dispatch('removeFromCart', product)
+    }
+    try {
+      const params = {amount: product.amount}
+      const {data} = await this.$axios.patch('web/cart/' + cartId + '/products/' + product.product_key, params)
+      commit('cartProducts', data.rows)
+    } catch (e) {}
+  },
+  async deleteCart({state, commit, dispatch}) {
+    if (!state.cartId) {
+      return
+    }
+    try {
+      await this.$axios.delete('web/cart/' + state.cartId)
+      commit('cartId', null)
+      commit('cartProducts', [])
+      dispatch('saveCartId')
+    } catch (e) {}
+  },
+  saveCartId({state}) {
+    if (state.cartId) {
+      localStorage.setItem('cartId', state.cartId)
+    } else {
+      localStorage.removeItem('cartId')
+    }
   },
 }

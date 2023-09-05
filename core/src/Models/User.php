@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property-read UserRole $role
  * @property-read File $file
+ * @property-read Cart $cart
  * @property-read UserToken[] $tokens
  * @property-read UserAddress[] $addresses
  * @property-read Order[] $orders
@@ -94,6 +96,11 @@ class User extends \Vesp\Models\User
     public function file(): BelongsTo
     {
         return $this->belongsTo(File::class);
+    }
+
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Cart::class);
     }
 
     public function tokens(): HasMany

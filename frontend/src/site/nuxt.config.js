@@ -8,6 +8,7 @@ Config.build = {
   babel: {
     compact: true,
   },
+  transpile: ['defu'],
 }
 Config.generate = {
   cache: false,
@@ -29,7 +30,7 @@ Config.publicRuntimeConfig = {
 }
 
 Config.buildModules = ['@nuxtjs/style-resources', '@nuxtjs/eslint-module', '@nuxtjs/fontawesome']
-Config.modules = [...Config.modules, '@vesp/frontend']
+Config.modules = [...Config.modules, '@vesp/frontend', '@nuxtjs/auth-next']
 Config.plugins = ['../admin/plugins/utils.js', '~/plugins/utils.js']
 
 Config.i18n.vueI18n = '~/lexicons/index.js'

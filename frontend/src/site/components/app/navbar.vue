@@ -10,7 +10,7 @@
       </b-button>
     </b-container>
 
-    <b-modal v-model="showCart" title="Корзина" hide-footer>
+    <b-modal v-model="showCart" title="Корзина" hide-footer size="lg">
       <cart />
       <order />
     </b-modal>

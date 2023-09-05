@@ -47,6 +47,8 @@ $group = $app->group(
                 $group->any('/products[/{uri:.+}]', App\Controllers\Web\Products::class);
                 $group->any('/filters', App\Controllers\Web\Filters::class);
                 $group->any('/orders', App\Controllers\Web\Orders::class);
+                $group->any('/cart[/{id}]', App\Controllers\Web\Cart::class);
+                $group->any('/cart/{cart_id}/products[/{product_key}]', App\Controllers\Web\Cart\Products::class);
             }
         );
     }

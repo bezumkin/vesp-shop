@@ -120,4 +120,24 @@ class Product extends Model
 
         return $array;
     }
+
+    public function getTitle(string $lang = 'ru'): string
+    {
+        $title = '';
+        $translations = $this->translations();
+        if ($lang === 'ru') {
+            $translations->where('lang', 'ru');
+        } else {
+            $translations->whereIn('lang', ['ru', $lang]);
+            $translations->orderByRaw("FIELD(`lang`, '$lang', 'ru')");
+        }
+        foreach ($translations->cursor() as $translation) {
+            /** @var ProductTranslation $translation */
+            if (!$title) {
+                $title = $translation->title;
+            }
+        }
+
+        return $title;
+    }
 }

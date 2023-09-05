@@ -20,7 +20,7 @@
           </div>
         </b-link>
         <b-link :to="$productLink(product)" class="font-weight-bold">{{ $translate(product.translations) }}</b-link>
-        <b-button variant="light" size="sm" class="ml-auto" @click="$store.commit('addToCart', product)">
+        <b-button variant="light" size="sm" class="ml-auto" @click="$store.dispatch('addToCart', product)">
           <fa icon="cart-shopping" class="mr-1" />
           {{ $price(product.price) }}
         </b-button>
@@ -44,7 +44,7 @@
           </b-link>
           <div class="d-flex justify-content-between align-items-center mt-2">
             <b-link :to="$productLink(product)" class="font-weight-bold">{{ $translate(product.translations) }}</b-link>
-            <b-button variant="light" size="sm" @click="$store.commit('addToCart', product)">
+            <b-button variant="light" size="sm" @click="$store.dispatch('addToCart', product)">
               <fa icon="cart-shopping" class="mr-1" />
               {{ $price(product.price) }}
             </b-button>

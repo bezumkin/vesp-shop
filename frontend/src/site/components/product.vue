@@ -23,7 +23,7 @@
         <div class="mt-3" v-html="$translate(product.translations, 'content')" />
         <div class="font-weight-bold mt-3">{{ $price(product.price) }}</div>
         <div class="mt-3">
-          <b-button variant="primary" @click="$store.commit('addToCart', product)">В корзину!</b-button>
+          <b-button variant="primary" @click="$store.dispatch('addToCart', product)">В корзину!</b-button>
         </div>
       </b-col>
     </b-row>
