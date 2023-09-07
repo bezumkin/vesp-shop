@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form @submit.prevent="onSubmit">
-      <form-profile v-model="record" />
+      <form-user v-model="record" :show-group="false" :show-comment="false" :show-status="false" />
 
       <b-button variant="primary" type="submit">{{ $t('actions.submit') }}</b-button>
     </b-form>
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import FormProfile from '../../components/forms/profile'
+import FormUser from '../../components/forms/user'
 
 export const url = 'user/profile'
 export default {
   name: 'ProfilePage',
-  components: {FormProfile},
+  components: {FormUser},
   data() {
     return {
       loading: false,

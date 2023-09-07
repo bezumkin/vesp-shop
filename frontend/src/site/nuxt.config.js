@@ -50,13 +50,25 @@ Config.fontawesome = {
   addCss: false,
   component: 'fa',
   icons: {
-    solid: ['faHome', 'faCartShopping', 'faMinus', 'faPlus'],
+    solid: [
+      'faHome',
+      'faCartShopping',
+      'faMinus',
+      'faPlus',
+      'faRightToBracket',
+      'faRightFromBracket',
+      'faUser',
+      'faEye',
+      'faKey',
+      'faCaretDown',
+    ],
   },
 }
 
 Config.bootstrapVue.componentPlugins = [
   'LayoutPlugin',
   'NavbarPlugin',
+  'TabsPlugin',
   'ImagePlugin',
   'LinkPlugin',
   'PaginationPlugin',
@@ -71,6 +83,7 @@ Config.bootstrapVue.componentPlugins = [
   'FormInputPlugin',
   'FormCheckboxPlugin',
   'FormSelectPlugin',
+  'InputGroupPlugin',
   'SpinnerPlugin',
 ]
 

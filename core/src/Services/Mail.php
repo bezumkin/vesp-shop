@@ -34,6 +34,9 @@ class Mail
             $mail->addAddress($to);
             $mail->setFrom(getenv('SMTP_USER'), getenv('SMTP_USER_NAME'));
 
+            if (substr($tpl, -4) !== '.tpl') {
+                $tpl .= '.tpl';
+            }
             // Content
             $body = (new Fenom())->fetch($tpl, $data);
             $mail->Body = CssInliner::fromHtml($body)->inlineCss()->render();

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Services\Mail;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use RuntimeException;
+use Vesp\Helpers\Jwt;
 
 /**
  * @property int $id
@@ -116,5 +119,69 @@ class User extends \Vesp\Models\User
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function createToken(?string $ip = null): UserToken
+    {
+        /** @var UserToken $token */
+        $token = $this->tokens()->create([
+            'token' => Jwt::makeToken($this->id),
+            'valid_till' => date('Y-m-d H:i:s', time() + getenv('JWT_EXPIRE')),
+            'ip' => $ip,
+        ]);
+
+        // Limit active tokens
+        if ($max = getenv('JWT_MAX')) {
+            $c = $this->tokens()->where('active', true);
+            if ($c->count() > $max && $res = $c->orderBy('updated_at')->orderBy('created_at')->first()) {
+                $res->update(['active' => false]);
+            }
+        }
+
+        return $token;
+    }
+
+    public function sendEmail(string $subject, string $tpl, ?array $data = []): ?string
+    {
+        return (new Mail())->send($this->email, $subject, $tpl, $data);
+    }
+
+    public function fillData($data): User
+    {
+        array_walk($data, static function (&$val) {
+            if (is_string($val)) {
+                $val = trim($val);
+                if (empty($val)) {
+                    $val = null;
+                }
+            }
+        });
+
+        if (empty($data['username'])) {
+            throw new RuntimeException('errors.user.no_username');
+        }
+        if (empty($data['fullname'])) {
+            throw new RuntimeException('errors.user.no_fullname');
+        }
+        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new RuntimeException('errors.user.no_email');
+        }
+
+        $c = self::query();
+        if ($this->id) {
+            $c->where('id', '!=', $this->id);
+        }
+
+        if ((clone $c)->where('username', $data['username'])->count()) {
+            throw new RuntimeException('errors.user.username_exists');
+        }
+
+        if ((clone $c)->where('email', $data['email'])->count()) {
+            throw new RuntimeException('errors.user.email_exists');
+        }
+
+        $this->fill($data);
+
+        return $this;
     }
 }

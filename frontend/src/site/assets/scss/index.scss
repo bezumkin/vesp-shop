@@ -7,6 +7,7 @@
 @import '~bootstrap/scss/type';
 @import '~bootstrap/scss/bootstrap-grid';
 @import '~bootstrap/scss/navbar';
+@import '~bootstrap/scss/nav';
 @import '~bootstrap/scss/pagination';
 @import '~bootstrap/scss/images';
 @import '~bootstrap/scss/buttons';
@@ -20,6 +21,7 @@
 @import '~bootstrap/scss/forms';
 @import '~bootstrap/scss/custom-forms';
 @import '~bootstrap/scss/alert';
+@import '~bootstrap/scss/dropdown';
 @import '~bootstrap/scss/utilities/sizing';
 @import '~bootstrap/scss/utilities/text';
 @import '~bootstrap/scss/utilities/flex';
@@ -30,7 +32,7 @@
 @import '@fortawesome/fontawesome-svg-core/styles.css';
 @import '~bootstrap-vue/src/components/modal';
 @import '~bootstrap-vue/src/components/form-checkbox';
-// @import '~nouislider';
+@import '~bootstrap-vue/src/components/dropdown';
 
 .page-enter-active,
 .page-leave-active,

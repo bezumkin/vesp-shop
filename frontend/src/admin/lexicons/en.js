@@ -130,8 +130,16 @@ export default {
     },
   },
   errors: {
-    security: {
-      inactive: 'Your account is not active',
+    user: {
+      no_username: 'Username is required',
+      no_fullname: 'Fullname is required',
+      no_email: 'Email is required',
+      username_exists: 'This username is already exists',
+      email_exists: 'This email is already exists',
+      inactive: 'This account is not active',
+      blocked: 'This account is blocked',
+    },
+    login: {
       wrong: 'Wrong username or password',
     },
     category: {

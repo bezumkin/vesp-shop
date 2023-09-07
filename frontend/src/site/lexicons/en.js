@@ -18,4 +18,16 @@ En.filters = {
   no_results: 'Nothing found',
 }
 
+En.cart = {
+  cart: 'Cart',
+}
+
+En.security = {
+  login: 'Login',
+  logout: 'Logout',
+  profile: 'Profile',
+  register: 'Register',
+  reset: 'Forget password',
+}
+
 export default En

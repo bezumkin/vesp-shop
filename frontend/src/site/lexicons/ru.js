@@ -18,4 +18,15 @@ Ru.filters = {
   no_results: 'Ничего не найдено',
 }
 
+Ru.cart = {
+  cart: 'Корзина',
+}
+
+Ru.security = {
+  login: 'Вход',
+  logout: 'Выход',
+  profile: 'Профиль',
+  register: 'Регистрация',
+  reset: 'Забыл пароль',
+}
 export default Ru

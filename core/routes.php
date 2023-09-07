@@ -9,8 +9,11 @@ $group = $app->group(
         $group->group(
             '/security',
             static function (RouteCollectorProxy $group) {
-                $group->any('/login', App\Controllers\Security\Login::class);
-                $group->any('/logout', App\Controllers\Security\Logout::class);
+                $group->map(['OPTIONS', 'POST'], '/login', App\Controllers\Security\Login::class);
+                $group->map(['OPTIONS', 'POST'], '/logout', App\Controllers\Security\Logout::class);
+                $group->map(['OPTIONS', 'POST'], '/register', App\Controllers\Security\Register::class);
+                $group->map(['OPTIONS', 'POST'], '/reset', App\Controllers\Security\Reset::class);
+                $group->map(['OPTIONS', 'POST'], '/activate', App\Controllers\Security\Activate::class);
             }
         );
 

@@ -130,8 +130,16 @@ export default {
     },
   },
   errors: {
-    security: {
-      inactive: 'Ваш аккаунт неактивен',
+    user: {
+      no_username: 'Укажите имя пользователя',
+      no_fullname: 'Укажите полное имя',
+      no_email: 'Укажите email почта',
+      username_exists: 'Имя пользователя уже занято',
+      email_exists: 'Такой email уже используется',
+      inactive: 'Учётная запись не была активирована',
+      blocked: 'Учётная запись заблокирована',
+    },
+    login: {
       wrong: 'Неправильное имя или пароль',
     },
     category: {

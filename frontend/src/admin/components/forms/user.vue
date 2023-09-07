@@ -1,22 +1,15 @@
 <template>
   <div>
     <b-row>
-      <b-col>
+      <b-col md="8">
         <b-form-group :label="$t('models.user.username')">
-          <b-form-input v-model.trim="record.username" required autofocus />
+          <b-form-input v-model="record.username" required autofocus />
         </b-form-group>
         <b-form-group :label="$t('models.user.password')">
-          <b-input-group>
-            <b-form-input v-model.trim="record.password" :required="!record.id" />
-            <template #append>
-              <b-button @click="generatePassword">
-                <fa icon="redo" />
-              </b-button>
-            </template>
-          </b-input-group>
+          <vesp-input-password v-model="record.password" :required="!record.id" />
         </b-form-group>
       </b-col>
-      <b-col md="5" class="d-flex justify-content-md-end">
+      <b-col md="4" class="d-flex justify-content-md-end">
         <b-form-group>
           <file-upload
             v-model="record.new_file"
@@ -28,9 +21,19 @@
         </b-form-group>
       </b-col>
     </b-row>
-    <b-form-group :label="$t('models.user.fullname')">
-      <b-form-input v-model.trim="record.fullname" required />
-    </b-form-group>
+
+    <b-row>
+      <b-col md="8">
+        <b-form-group :label="$t('models.user.fullname')">
+          <b-form-input v-model="record.fullname" required />
+        </b-form-group>
+      </b-col>
+      <b-col md="4">
+        <b-form-group :label="$t('models.user.gender')">
+          <b-form-select v-model="record.gender" :options="genderOptions" />
+        </b-form-group>
+      </b-col>
+    </b-row>
 
     <b-row>
       <b-col md="6">
@@ -45,12 +48,8 @@
       </b-col>
     </b-row>
 
-    <b-form-group :label="$t('models.user.role')">
+    <b-form-group v-if="showGroup" :label="$t('models.user.role')">
       <vesp-input-combo-box v-model="record.role_id" url="admin/user-roles" required />
-    </b-form-group>
-
-    <b-form-group :label="$t('models.user.gender')">
-      <b-form-select v-model="record.gender" :options="genderOptions" />
     </b-form-group>
 
     <b-form-group :label="$t('models.user.company')">
@@ -82,11 +81,11 @@
       </b-col>
     </b-row>
 
-    <b-form-group :label="$t('models.user.comment')">
+    <b-form-group v-if="showComment" :label="$t('models.user.comment')">
       <b-form-textarea v-model.trim="record.comment" rows="3" />
     </b-form-group>
 
-    <b-row>
+    <b-row v-if="showStatus">
       <b-col md="6">
         <b-form-group>
           <b-form-checkbox v-model.trim="record.active">
@@ -106,7 +105,7 @@
 </template>
 
 <script>
-import FileUpload from '@/components/file-upload.vue'
+import FileUpload from '../file-upload'
 
 export default {
   name: 'FormUser',
@@ -115,6 +114,18 @@ export default {
     value: {
       type: Object,
       required: true,
+    },
+    showGroup: {
+      type: Boolean,
+      default: true,
+    },
+    showComment: {
+      type: Boolean,
+      default: true,
+    },
+    showStatus: {
+      type: Boolean,
+      default: true,
     },
   },
   computed: {
