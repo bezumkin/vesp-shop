@@ -6,6 +6,8 @@ use Slim\Routing\RouteCollectorProxy;
 $group = $app->group(
     '/api',
     function (RouteCollectorProxy $group) {
+        $group->get('/image/{id}', App\Controllers\Image::class);
+
         $group->group(
             '/security',
             static function (RouteCollectorProxy $group) {
@@ -17,8 +19,13 @@ $group = $app->group(
             }
         );
 
-        $group->any('/user/profile', App\Controllers\User\Profile::class);
-        $group->get('/image/{id}', App\Controllers\Image::class);
+        $group->group(
+            '/user',
+            static function (RouteCollectorProxy $group) {
+                $group->any('/profile', App\Controllers\User\Profile::class);
+                $group->any('/addresses', App\Controllers\User\Addresses::class);
+            }
+        );
 
         $group->group(
             '/admin',
@@ -49,7 +56,7 @@ $group = $app->group(
                 $group->any('/category/{category_id}/filters', App\Controllers\Web\Category\Filters::class);
                 $group->any('/products[/{uri:.+}]', App\Controllers\Web\Products::class);
                 $group->any('/filters', App\Controllers\Web\Filters::class);
-                $group->any('/orders', App\Controllers\Web\Orders::class);
+                $group->any('/orders/{uuid}', App\Controllers\Web\Orders::class);
                 $group->any('/cart[/{id}]', App\Controllers\Web\Cart::class);
                 $group->any('/cart/{cart_id}/products[/{product_key}]', App\Controllers\Web\Cart\Products::class);
             }

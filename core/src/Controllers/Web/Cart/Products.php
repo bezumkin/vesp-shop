@@ -18,6 +18,10 @@ class Products extends ModelController
 
     public function checkScope(string $method): ?ResponseInterface
     {
+        if ($method === 'options') {
+            return null;
+        }
+
         $id = $this->getProperty('cart_id');
         if (!$id || !$this->cart = Cart::query()->find($id)) {
             return $this->failure('', 404);

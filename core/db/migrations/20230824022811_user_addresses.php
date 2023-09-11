@@ -16,8 +16,8 @@ final class UserAddresses extends Migration
                 $table->foreignId('user_id')
                     ->constrained('users')->cascadeOnDelete();
                 $table->string('receiver')->nullable();
+                $table->string('email')->nullable();
                 $table->string('phone')->nullable();
-                $table->tinyInteger('gender')->nullable();
                 $table->string('company')->nullable();
                 $table->string('address')->nullable();
                 $table->string('country')->nullable();

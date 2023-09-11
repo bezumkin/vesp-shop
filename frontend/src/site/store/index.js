@@ -1,6 +1,8 @@
 export const state = () => ({
   cartId: null,
   cartProducts: [],
+  showLogin: false,
+  showCart: false,
 })
 
 export const mutations = {
@@ -9,6 +11,12 @@ export const mutations = {
   },
   cartProducts(state, payload) {
     state.cartProducts = payload
+  },
+  showLogin(state, payload = null) {
+    state.showLogin = payload === null ? !state.showLogin : Boolean(payload)
+  },
+  showCart(state, payload = null) {
+    state.showCart = payload === null ? !state.showCart : Boolean(payload)
   },
 }
 
@@ -52,7 +60,13 @@ export const actions = {
       try {
         const {data} = await this.$axios.get('web/cart/' + cartId + '/products')
         commit('cartProducts', data.rows)
-      } catch (e) {}
+      } catch (e) {
+        // Delete a non-existent cartId
+        if (e.status === 404) {
+          commit('cartId', null)
+          dispatch('saveCartId')
+        }
+      }
     }
   },
   async addToCart({commit, dispatch}, item) {
@@ -90,6 +104,10 @@ export const actions = {
       commit('cartId', null)
       commit('cartProducts', [])
       dispatch('saveCartId')
+
+      if (this.$auth.loggedIn) {
+        this.$auth.setUser({...this.$auth.user, cart: null})
+      }
     } catch (e) {}
   },
   saveCartId({state}) {

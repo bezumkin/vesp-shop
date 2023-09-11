@@ -6,7 +6,7 @@
       </b-navbar-brand>
 
       <div class="ml-auto">
-        <b-button v-if="!$auth.loggedIn" @click="showLogin = true">
+        <b-button v-if="!$auth.loggedIn" @click="$store.commit('showLogin')">
           <fa icon="right-to-bracket" />
         </b-button>
         <b-dropdown v-else>
@@ -23,18 +23,25 @@
         </b-dropdown>
       </div>
 
-      <b-button variant="primary" :disabled="!products" class="ml-2" @click="showCart = true">
+      <b-button variant="primary" :disabled="!products" class="ml-2" @click="$store.commit('showCart')">
         <fa icon="cart-shopping" />
         <span v-if="total" style="white-space: nowrap">{{ $price(total) }}</span>
       </b-button>
     </b-container>
 
-    <b-modal v-if="showCart" visible :title="$t('cart.cart')" hide-footer size="lg" @hidden="showCart = false">
+    <b-modal
+      v-if="$store.state.showCart"
+      visible
+      :title="$t('cart.cart')"
+      hide-footer
+      size="lg"
+      @hidden="$store.commit('showCart')"
+    >
       <cart />
       <order />
     </b-modal>
 
-    <app-login v-if="!$auth.loggedIn && showLogin" @hidden="showLogin = false" />
+    <app-login v-if="!$auth.loggedIn && $store.state.showLogin" @hidden="$store.commit('showLogin')" />
     <user-profile v-else-if="$auth.loggedIn && showProfile" @hidden="showProfile = false" />
   </b-navbar>
 </template>
@@ -50,8 +57,6 @@ export default {
   components: {AppLogin, Order, Cart, UserProfile},
   data() {
     return {
-      showCart: false,
-      showLogin: false,
       showProfile: false,
     }
   },

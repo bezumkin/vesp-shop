@@ -11,15 +11,7 @@ class Register extends Controller
     public function post(): ResponseInterface
     {
         try {
-            $user = new User();
-            $properties = $this->getProperties();
-            $properties['active'] = false;
-            $properties['role_id'] = getenv('REGISTER_ROLE_ID') ?: 2;
-            if (empty($properties['password'])) {
-                $properties['password'] = bin2hex(random_bytes(20));
-            }
-            $user->fillData($properties);
-            $user->save();
+            $user = User::createUser($this->getProperties());
         } catch (\Exception $e) {
             return $this->failure($e->getMessage());
         }

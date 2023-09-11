@@ -29,7 +29,6 @@ Config.publicRuntimeConfig = {
   PRODUCTS_PREFIX: env.PRODUCTS_PREFIX,
 }
 
-Config.buildModules = ['@nuxtjs/style-resources', '@nuxtjs/eslint-module', '@nuxtjs/fontawesome']
 Config.modules = [...Config.modules, '@vesp/frontend', '@nuxtjs/auth-next']
 Config.plugins = ['../admin/plugins/utils.js', '~/plugins/utils.js']
 
@@ -70,6 +69,7 @@ Config.bootstrapVue.componentPlugins = [
   'NavbarPlugin',
   'TabsPlugin',
   'ImagePlugin',
+  'AlertPlugin',
   'LinkPlugin',
   'PaginationPlugin',
   'OverlayPlugin',
@@ -81,9 +81,11 @@ Config.bootstrapVue.componentPlugins = [
   'FormPlugin',
   'FormGroupPlugin',
   'FormInputPlugin',
+  'FormTextarea',
   'FormCheckboxPlugin',
   'FormSelectPlugin',
   'InputGroupPlugin',
+  'FormRadioPlugin',
   'SpinnerPlugin',
 ]
 

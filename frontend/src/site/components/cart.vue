@@ -33,15 +33,16 @@
     </b-row>
 
     <div class="bg-light mt-3 py-3 border-top text-center">
-      Итого <strong>{{ amount }}</strong> шт., на сумму <strong v-html="$price(total)" />.
+      {{ $t('cart.total') }}
+      <span v-html="$tc('cart.total_pieces', amount, {amount})" />, <span v-html="$t('cart.total_price', {total})" />.
     </div>
 
     <div class="mt-4">
-      <b-button variant="danger" @click="cartDelete">Очистить корзину</b-button>
+      <b-button variant="danger" @click="cartDelete">{{ $t('cart.clear') }}</b-button>
     </div>
   </b-overlay>
   <div v-else>
-    <div class="p-4 text-center font-weight-bold">Ваша корзина пуста</div>
+    <div class="p-4 text-center font-weight-bold">{{ $t('cart.empty') }}</div>
   </div>
 </template>
 
@@ -68,7 +69,7 @@ export default {
       return this.$store.state.cartProducts
     },
     total() {
-      return this.$store.getters.cartTotal
+      return this.$price(this.$store.getters.cartTotal)
     },
     amount() {
       return this.$store.getters.cartProducts

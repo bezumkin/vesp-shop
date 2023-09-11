@@ -148,5 +148,14 @@ export default {
     product: {
       alias_exists: 'Another product in this category is already using this alias',
     },
+    address: {
+      no_receiver: 'Order receiver is required',
+      no_address: 'Please specify the address',
+      no_zip: 'Please specify the postal code',
+      no_city: 'Please specify the city',
+      no_phone: 'Please provide a phone number',
+      no_email: 'Email is required',
+      wrong_email: 'You have entered an incorrect email',
+    },
   },
 }

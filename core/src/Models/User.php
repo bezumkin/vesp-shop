@@ -184,4 +184,18 @@ class User extends \Vesp\Models\User
 
         return $this;
     }
+
+    public static function createUser(array $properties): User
+    {
+        $user = new User();
+        $properties['active'] = false;
+        $properties['role_id'] = getenv('REGISTER_ROLE_ID') ?: 2;
+        if (empty($properties['password'])) {
+            $properties['password'] = bin2hex(random_bytes(20));
+        }
+        $user->fillData($properties);
+        $user->save();
+
+        return $user;
+    }
 }

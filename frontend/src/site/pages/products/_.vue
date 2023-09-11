@@ -23,7 +23,7 @@ export default {
       const {data} = await app.$axios.get('web/resource/' + params.pathMatch)
       return {record: data}
     } catch (e) {
-      error({statusCode: e.response.status, message: e.message})
+      error({statusCode: e.statusCode || 404, message: e.data || 'Not Found'})
     }
   },
   data() {

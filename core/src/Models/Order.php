@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Mail;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,7 +44,7 @@ class Order extends Model
     {
         static::saving(static function (self $model) {
             if (!$model->uuid) {
-                $model->uuid = Uuid::uuid4();
+                $model->uuid = (string)Uuid::uuid4();
             }
             if (!$model->created_at) {
                 $model->created_at = Carbon::now();
@@ -91,5 +92,39 @@ class Order extends Model
         $this->cart = max($cart, 0);
         $this->total = max($total, 0);
         $this->save();
+    }
+
+    public function getData(): array
+    {
+        return [
+            'order' => $this->toArray(),
+            'user' => $this->user->toArray(),
+            'address' => $this->address->toArray(),
+            'products' => $this->orderProducts()
+                ->with('product:id,uri', 'product.translations:product_id,lang,title', 'product.firstFile')
+                ->get()
+                ->toArray(),
+        ];
+    }
+
+    public function sendEmails(?string $lang = 'ru'): ?string
+    {
+        $data = $this->getData();
+        $data['lang'] = $lang;
+
+        if ($emailAdmin = getenv('EMAIL_ADMIN')) {
+            $mail = new Mail();
+            $subject = getenv('EMAIL_SUBJECT_ORDER_NEW_ADMIN_' . strtoupper($lang));
+            if ($error = $mail->send($emailAdmin, $subject, 'email-order-new-admin', $data)) {
+                return $error;
+            }
+        }
+
+        $subject = getenv('EMAIL_SUBJECT_ORDER_NEW_USER_' . strtoupper($lang));
+        if ($error = $this->user->sendEmail($subject, 'email-order-new-user', $data)) {
+            return $error;
+        }
+
+        return null;
     }
 }
