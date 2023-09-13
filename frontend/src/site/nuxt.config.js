@@ -26,8 +26,8 @@ Config.head.link = [
   {rel: 'manifest', href: '/favicons/site.webmanifest'},
 ]
 Config.publicRuntimeConfig = {
-  PRODUCTS_PREFIX: env.PRODUCTS_PREFIX,
-  PAYMENT_SERVICES: env.PAYMENT_SERVICES,
+  PRODUCTS_PREFIX: env.PRODUCTS_PREFIX || '',
+  PAYMENT_SERVICES: env.PAYMENT_SERVICES || '',
 }
 
 Config.modules = [...Config.modules, '@vesp/frontend', '@nuxtjs/auth-next']
