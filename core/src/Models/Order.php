@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -26,6 +27,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @property-read User $user
  * @property-read UserAddress $address
+ * @property-read Payment $payment
  * @property-read OrderProduct[] $orderProducts
  * @property-read Product[] $products
  */
@@ -67,6 +69,11 @@ class Order extends Model
         return $this->belongsTo(UserAddress::class);
     }
 
+    public function payment(): HasOne
+    {
+        return $this->hasOne(Payment::class);
+    }
+
     public function orderProducts(): HasMany
     {
         return $this->hasMany(OrderProduct::class);
@@ -100,6 +107,7 @@ class Order extends Model
             'order' => $this->toArray(),
             'user' => $this->user->toArray(),
             'address' => $this->address->toArray(),
+            'payment' => $this->payment ? $this->payment->toArray() : null,
             'products' => $this->orderProducts()
                 ->with('product:id,uri', 'product.translations:product_id,lang,title', 'product.firstFile')
                 ->get()
@@ -126,5 +134,26 @@ class Order extends Model
         }
 
         return null;
+    }
+
+    public function createPayment(string $service): ?Payment
+    {
+        $service = strtolower($service);
+        $allowedServices = array_map('trim', explode(',', strtolower(getenv('PAYMENT_SERVICES') ?: '')));
+        if (!in_array($service, $allowedServices, true)) {
+            return null;
+        }
+
+        if (!$payment = $this->payment) {
+            $payment = new Payment([
+                'order_id' => $this->id,
+                'user_id' => $this->user_id,
+                'amount' => $this->total,
+            ]);
+        }
+        $payment->service = $service;
+        $payment->save();
+
+        return $payment;
     }
 }

@@ -48,6 +48,12 @@ Ru.order = {
   address: 'Адрес',
   comment: 'Комментарий',
   title: 'Заказ № <strong>{num}</strong> от <strong>{date}</strong>',
+  payment: 'Оплата',
+  payment_null: 'Без оплаты',
+  payment_yookassa: 'Yookassa',
+  payment_unpaid: 'Заказ ожидает оплату',
+  payment_paid: 'Заказ успешно оплачен {date}',
+  payment_confirm_qr: 'Я оплатил по QR коду',
 }
 
 export default Ru

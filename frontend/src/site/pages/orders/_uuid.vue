@@ -38,6 +38,15 @@
       <span v-html="$tc('cart.total_pieces', amount, {amount})" />, <span v-html="$t('cart.total_price', {total})" />.
     </div>
 
+    <div v-if="payment" class="mt-5">
+      <div v-if="payment.paid" class="alert alert-success">
+        {{ $t('order.payment_paid', {date: $options.filters.datetime(payment.paid_at)}) }}
+      </div>
+      <div v-else class="alert alert-info">
+        {{ $t('order.payment_unpaid') }}
+      </div>
+    </div>
+
     <div class="mt-5">
       <b-form-group :label="$t('order.receiver')">
         <b-form-input v-model="address.receiver" disabled />
@@ -115,6 +124,7 @@ export default {
       user: null,
       address: null,
       products: null,
+      payment: null,
     }
   },
   computed: {

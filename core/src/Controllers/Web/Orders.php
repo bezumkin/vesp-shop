@@ -22,6 +22,10 @@ class Orders extends Controller
             return $this->failure('Not Found', 404);
         }
 
+        if ($order->payment && $order->payment->paid === null) {
+            $order->payment->checkStatus();
+        }
+
         return $this->success($order->getData());
     }
 
@@ -88,8 +92,16 @@ class Orders extends Controller
         $order->save();
         $order->orderProducts()->saveMany($orderProducts);
 
+        $response = $order->toArray();
+        if (!empty($properties['payment'])) {
+            if ($payment = $order->createPayment($properties['payment'])) {
+                if ($link = $payment->getLink()) {
+                    $response['payment'] = $link;
+                }
+            }
+        }
         $order->sendEmails($lang);
 
-        return $this->success($order->toArray());
+        return $this->success($response);
     }
 }

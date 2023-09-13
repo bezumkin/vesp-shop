@@ -41,6 +41,7 @@ use Vesp\Helpers\Jwt;
  * @property-read UserToken[] $tokens
  * @property-read UserAddress[] $addresses
  * @property-read Order[] $orders
+ * @property-read Payment[] $payments
  */
 class User extends \Vesp\Models\User
 {
@@ -119,6 +120,11 @@ class User extends \Vesp\Models\User
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->HasMany(Payment::class);
     }
 
     public function createToken(?string $ip = null): UserToken

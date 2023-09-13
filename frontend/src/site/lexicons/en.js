@@ -49,5 +49,11 @@ En.order = {
   address: 'Address',
   comment: 'Comment',
   title: 'Order #<strong>{num}</strong> from <strong>{date}</strong>',
+  payment: 'Payment',
+  payment_null: 'No payment',
+  payment_yookassa: 'Yookassa',
+  payment_unpaid: 'The order is awaiting payment',
+  payment_paid: 'The order was successfully paid on the {date}',
+  payment_confirm_qr: 'I paid with the QR code',
 }
 export default En
