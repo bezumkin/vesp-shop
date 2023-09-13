@@ -62,7 +62,7 @@
       </b-col>
       <b-col md="6">
         <b-form-group :label="$t('models.product.weight')">
-          <b-form-input v-model="record.old_price" type="number" step="0.01" />
+          <b-form-input v-model="record.weight" type="number" step="0.01" />
         </b-form-group>
       </b-col>
     </b-row>
