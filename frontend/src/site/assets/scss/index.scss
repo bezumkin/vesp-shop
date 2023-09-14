@@ -8,6 +8,8 @@
 @import '~bootstrap/scss/bootstrap-grid';
 @import '~bootstrap/scss/navbar';
 @import '~bootstrap/scss/nav';
+@import '~bootstrap/scss/tables';
+@import '~bootstrap/scss/badge';
 @import '~bootstrap/scss/pagination';
 @import '~bootstrap/scss/images';
 @import '~bootstrap/scss/buttons';
@@ -15,6 +17,7 @@
 @import '~bootstrap/scss/breadcrumb';
 @import '~bootstrap/scss/spinners';
 @import '~bootstrap/scss/button-group';
+@import '~bootstrap/scss/input-group';
 @import '~bootstrap/scss/modal';
 @import '~bootstrap/scss/close';
 @import '~bootstrap/scss/transitions';
@@ -33,6 +36,7 @@
 @import '~bootstrap-vue/src/components/modal';
 @import '~bootstrap-vue/src/components/form-checkbox';
 @import '~bootstrap-vue/src/components/dropdown';
+@import '~bootstrap-vue/src/components/table';
 
 .page-enter-active,
 .page-leave-active,

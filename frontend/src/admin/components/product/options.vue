@@ -40,6 +40,10 @@ export default {
       type: String,
       default: 'primary',
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -79,7 +83,7 @@ export default {
       return this.isActive(option, variant) ? this.variantActive : this.variantInactive
     },
     onSelect(option, variant) {
-      if (option === 'discount') {
+      if (this.disabled) {
         return
       }
       const record = {...this.record}

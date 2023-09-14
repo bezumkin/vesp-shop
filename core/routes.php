@@ -24,6 +24,7 @@ $group = $app->group(
             static function (RouteCollectorProxy $group) {
                 $group->any('/profile', App\Controllers\User\Profile::class);
                 $group->any('/addresses', App\Controllers\User\Addresses::class);
+                $group->any('/orders[/{uuid}]', App\Controllers\User\Orders::class);
             }
         );
 

@@ -19,6 +19,7 @@ class Orders extends ModelController
     {
         $c->with('orderProducts', 'orderProducts.product');
         $c->with('address');
+        $c->with('payment');
 
         return $c;
     }
@@ -42,6 +43,21 @@ class Orders extends ModelController
     {
         $c->withCount('orderProducts');
         $c->with('user:id,fullname,username');
+        $c->with('payment:order_id,paid');
+
+        return $c;
+    }
+
+    protected function addSorting(Builder $c): Builder
+    {
+        if ($sort = $this->getProperty('sort')) {
+            if ($sort === 'num') {
+                $dir = strtolower($this->getProperty('dir', '')) === 'desc' ? 'desc' : 'asc';
+                $c->orderBy('created_at', $dir);
+            } else {
+                $c = parent::addSorting($c);
+            }
+        }
 
         return $c;
     }
@@ -83,6 +99,11 @@ class Orders extends ModelController
                 $address = $record->user->addresses()->create($item);
                 $record->address_id = $address->id;
             }
+        }
+
+        if ($record->payment && $payment = $this->getProperty('payment')) {
+            $record->payment->paid = $payment['paid'] ?? null;
+            $record->payment->save();
         }
 
         $record->calculate();

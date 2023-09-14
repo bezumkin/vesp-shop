@@ -9,13 +9,22 @@
         <b-button v-if="!$auth.loggedIn" @click="$store.commit('showLogin')">
           <fa icon="right-to-bracket" />
         </b-button>
-        <b-dropdown v-else>
+        <b-dropdown v-else variant="light">
           <template #button-content>
-            <fa icon="user" />
+            <b-img
+              v-if="$auth.user.file"
+              :src="$image($auth.user.file, {w: 50, h: 50})"
+              class="rounded-circle"
+              width="25"
+              height="25"
+            />
+            <fa v-else icon="user" />
           </template>
           <b-dropdown-text>{{ $auth.user.fullname }}</b-dropdown-text>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item @click="showProfile = true">{{ $t('security.profile') }}</b-dropdown-item>
+          <b-dropdown-divider />
+          <b-dropdown-item :to="{name: 'user-orders'}">{{ $t('models.order.title_many') }}</b-dropdown-item>
+          <b-dropdown-item :to="{name: 'user-profile'}">{{ $t('security.profile') }}</b-dropdown-item>
+          <b-dropdown-divider />
           <b-dropdown-item link-class="d-flex justify-content-between align-items-center" @click="onLogout">
             {{ $t('security.logout') }}
             <fa icon="right-from-bracket" />
@@ -42,30 +51,30 @@
     </b-modal>
 
     <app-login v-if="!$auth.loggedIn && $store.state.showLogin" @hidden="$store.commit('showLogin')" />
-    <user-profile v-else-if="$auth.loggedIn && showProfile" @hidden="showProfile = false" />
   </b-navbar>
 </template>
 
 <script>
 import Cart from '~/components/cart'
 import Order from '~/components/order'
-import UserProfile from '~/components/user-profile'
 import AppLogin from '~/components/app/login'
 
 export default {
   name: 'AppNavbar',
-  components: {AppLogin, Order, Cart, UserProfile},
-  data() {
-    return {
-      showProfile: false,
-    }
-  },
+  components: {AppLogin, Order, Cart},
   computed: {
     total() {
       return this.$store.getters.cartTotal
     },
     products() {
       return this.$store.getters.cartProducts
+    },
+  },
+  watch: {
+    '$auth.loggedIn'(newValue) {
+      if (newValue && this.$route.name.startsWith('user')) {
+        window.location.reload()
+      }
     },
   },
   methods: {

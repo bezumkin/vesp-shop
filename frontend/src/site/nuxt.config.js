@@ -61,6 +61,9 @@ Config.fontawesome = {
       'faEye',
       'faKey',
       'faCaretDown',
+      'faSync',
+      'faTimes',
+      'faCheck',
     ],
   },
 }
@@ -68,6 +71,7 @@ Config.fontawesome = {
 Config.bootstrapVue.componentPlugins = [
   'LayoutPlugin',
   'NavbarPlugin',
+  'TablePlugin',
   'TabsPlugin',
   'ImagePlugin',
   'AlertPlugin',
@@ -88,6 +92,7 @@ Config.bootstrapVue.componentPlugins = [
   'InputGroupPlugin',
   'FormRadioPlugin',
   'SpinnerPlugin',
+  'BadgePlugin',
 ]
 
 export default Config

@@ -31,6 +31,17 @@ class Payment extends Model
     ];
     protected $guarded = ['paid', 'paid_at'];
 
+    protected static function booted(): void
+    {
+        static::saving(static function (self $model) {
+            if (!$model->paid && $model->paid_at) {
+                $model->paid_at = null;
+            } elseif ($model->paid && !$model->paid_at) {
+                $model->paid_at = Carbon::now();
+            }
+        });
+    }
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

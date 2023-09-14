@@ -24,12 +24,12 @@
       </div>
     </b-form-group>
 
-    <b-form-group :label="$t('models.user_address.company')">
-      <b-form-input v-model.trim="myValue.address.company" :disabled="myValue.address_id > 0" />
-    </b-form-group>
-
     <b-form-group :label="$t('models.user_address.receiver')">
       <b-form-input v-model.trim="myValue.address.receiver" :disabled="myValue.address_id > 0" />
+    </b-form-group>
+
+    <b-form-group :label="$t('models.user_address.company')">
+      <b-form-input v-model.trim="myValue.address.company" :disabled="myValue.address_id > 0" />
     </b-form-group>
 
     <b-form-group :label="$t('models.user_address.address')">

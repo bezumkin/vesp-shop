@@ -44,7 +44,7 @@
     <b-row>
       <b-col md="6">
         <b-form-group :label="$t('models.order.cart')">
-          <b-form-input :value="$price(record.cart, null)" disabled />
+          <b-form-input :value="$price(record.cart)" disabled />
         </b-form-group>
       </b-col>
       <b-col md="6">
@@ -72,7 +72,7 @@
     </b-row>
 
     <b-form-group :label="$t('models.order.comment')">
-      <b-form-textarea v-model.trim="record.comment" rows="5" autofocus />
+      <b-form-textarea v-model.trim="record.comment" rows="5" />
     </b-form-group>
   </div>
 </template>
