@@ -62,5 +62,6 @@ services:
     depends_on:
       - nginx
     network_mode: 'service:nginx'
+    restart: unless-stopped
     working_dir: /vesp/frontend
-    command: sh -c 'yarn && yarn generate'
+    command: sh -c 'yarn && yarn generate:admin && yarn build:site && yarn start:site'
