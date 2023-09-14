@@ -107,7 +107,7 @@ export default {
       return item && !item.active ? 'text-muted' : ''
     },
     getProductUrl(item) {
-      return this.$config.SITE_URL + '/' + this.$config.PRODUCTS_PREFIX + '/' + item.uri
+      return this.$config.SITE_URL + this.$config.PRODUCTS_PREFIX + '/' + item.uri
     },
     getCategoryUrl(item) {
       return {name: 'categories-edit-id', params: {id: item.id}}
