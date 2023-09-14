@@ -21,7 +21,7 @@ Config.axios.baseURL = env.API_URL || '/api/'
 Config.head.title = env.APP_NAME || 'Vesp Framework'
 Config.publicRuntimeConfig = {
   SITE_URL: env.SITE_URL,
-  SHOP_CURRENCY: env.SHOP_CURRENCY,
+  PRODUCTS_PREFIX: env.PRODUCTS_PREFIX || '',
 }
 
 Config.modules = union(Config.modules, ['@vesp/frontend', '@nuxtjs/auth-next'])
