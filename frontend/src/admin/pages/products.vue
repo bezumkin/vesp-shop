@@ -110,7 +110,7 @@ export default {
       return this.$config.SITE_URL + this.$config.PRODUCTS_PREFIX + '/' + item.uri
     },
     getCategoryUrl(item) {
-      return {name: 'categories-edit-id', params: {id: item.id}}
+      return {name: 'categories-edit-id', params: {id: item.category_id}}
     },
   },
 }
