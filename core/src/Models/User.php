@@ -48,6 +48,10 @@ class User extends \Vesp\Models\User
     protected $guarded = ['id', 'remote_id', 'created_at', 'updated_at'];
     protected $fillable = [];
     protected $hidden = ['password', 'tmp_password', 'salt'];
+    protected $casts = [
+        'active' => 'boolean',
+        'blocked' => 'boolean'
+    ];
 
     public function setAttribute($key, $value)
     {
