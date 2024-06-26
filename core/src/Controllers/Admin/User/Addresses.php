@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Psr\Http\Message\ResponseInterface;
 use Vesp\Controllers\ModelController;
 
+/**
+ * @property User $user
+ */
 class Addresses extends ModelController
 {
     protected string|array $scope = 'users';
     protected string $model = UserAddress::class;
-
-    /** @var User $user */
-    protected ?\Vesp\Models\User $user;
 
     public function checkScope(string $method): ?ResponseInterface
     {

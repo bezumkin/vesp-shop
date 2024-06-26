@@ -7,10 +7,11 @@ use App\Models\UserToken;
 use Psr\Http\Message\ResponseInterface;
 use Vesp\Controllers\Controller;
 
+/**
+ * @property User $user
+ */
 class Logout extends Controller
 {
-    /** @var User $user */
-    protected ?\Vesp\Models\User $user;
     protected string|array $scope = 'profile';
 
     public function post(): ResponseInterface

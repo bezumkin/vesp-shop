@@ -7,14 +7,14 @@ use App\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Vesp\Controllers\Controller;
 
+/**
+ * @property User $user
+ */
 class Profile extends Controller
 {
     use FileModelController;
 
     protected string|array $scope = 'profile';
-    /** @var User $user */
-    protected ?\Vesp\Models\User $user;
-
     public $attachments = ['file'];
 
     public function get(): ResponseInterface

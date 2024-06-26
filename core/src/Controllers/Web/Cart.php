@@ -7,10 +7,11 @@ use App\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Vesp\Controllers\ModelController;
 
+/**
+ * @property User $user
+ */
 class Cart extends ModelController
 {
-    /** @var User */
-    protected ?\Vesp\Models\User $user;
     protected string $model = CartModel::class;
 
     public function put(): ResponseInterface
