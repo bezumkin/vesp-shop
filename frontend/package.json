@@ -7,7 +7,7 @@
     "dev:admin": "nuxt --config-file src/admin/nuxt.config.js",
     "dev:site": "nuxt --config-file src/site/nuxt.config.js",
     "dev": "concurrently yarn:dev:admin yarn:dev:site",
-    "build:admin": "nuxt build --config-file ./src/admin/nuxt.config.js",
+    "build:admin": "nuxt generate --config-file ./src/admin/nuxt.config.js",
     "build:site": "nuxt build --config-file ./src/site/nuxt.config.js",
     "build": "concurrently yarn:build:admin yarn:build:site",
     "start:admin": "nuxt start --config-file src/admin/nuxt.config.js",
