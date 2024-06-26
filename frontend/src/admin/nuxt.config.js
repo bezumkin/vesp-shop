@@ -70,4 +70,8 @@ Config.bootstrapVue = merge(Config.bootstrapVue, {
   ]),
 })
 
+Config.server = {
+  host: '127.0.0.1',
+  port: '4000',
+}
 export default Config

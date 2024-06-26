@@ -1,0 +1,28 @@
+services:
+
+  mariadb:
+    restart: no
+    ports:
+      - ${MARIADB_PORT}:3306
+
+  nginx:
+    restart: no
+    extra_hosts:
+      - "vesp-shop.test=host-gateway"
+
+  php-fpm:
+    restart: no
+    environment:
+      - PHP_IDE_CONFIG=serverName=VespDocker
+    command: sh -c 'composer install && php-fpm'
+
+  node:
+    restart: no
+    environment:
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
+    command: sh -c 'yarn && yarn dev'
+
+  mailhog:
+    image: teawithfruit/mailhog
+    ports:
+      - ${MAILHOG_PORT}:8025
