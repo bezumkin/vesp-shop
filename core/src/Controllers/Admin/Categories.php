@@ -15,8 +15,8 @@ class Categories extends ModelController
     use FileModelController;
     use TranslateModelController;
 
-    protected $scope = 'products';
-    protected $model = Category::class;
+    protected string|array $scope = 'products';
+    protected string $model = Category::class;
     protected $attachments = ['file'];
 
     protected function beforeGet(Builder $c): Builder

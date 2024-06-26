@@ -14,8 +14,8 @@ class Products extends ModelController
 {
     use TranslateModelController;
 
-    protected $scope = 'products';
-    protected $model = Product::class;
+    protected string|array $scope = 'products';
+    protected string $model = Product::class;
 
     protected function beforeGet(Builder $c): Builder
     {

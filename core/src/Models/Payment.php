@@ -81,7 +81,7 @@ class Payment extends Model
     public function getLink(): ?array
     {
         if ($link = $this->getService()->makePayment($this)) {
-            return strpos($link, 'data:image/') === 0
+            return str_starts_with($link, 'data:image/')
                 ? ['qr' => $link]
                 : ['redirect' => $link];
         }

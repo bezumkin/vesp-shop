@@ -8,8 +8,8 @@ use Vesp\Controllers\ModelGetController;
 
 class Addresses extends ModelGetController
 {
-    protected $scope = 'profile';
-    protected $model = UserAddress::class;
+    protected string|array $scope = 'profile';
+    protected string $model = UserAddress::class;
 
     protected function beforeGet(Builder $c): Builder
     {

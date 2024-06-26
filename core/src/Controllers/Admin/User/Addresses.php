@@ -10,11 +10,11 @@ use Vesp\Controllers\ModelController;
 
 class Addresses extends ModelController
 {
-    protected $scope = 'users';
-    protected $model = UserAddress::class;
+    protected string|array $scope = 'users';
+    protected string $model = UserAddress::class;
 
     /** @var User $user */
-    protected $user;
+    protected ?\Vesp\Models\User $user;
 
     public function checkScope(string $method): ?ResponseInterface
     {

@@ -10,8 +10,8 @@ use Vesp\Controllers\Controller;
 class Logout extends Controller
 {
     /** @var User $user */
-    protected $user;
-    protected $scope = 'profile';
+    protected ?\Vesp\Models\User $user;
+    protected string|array $scope = 'profile';
 
     public function post(): ResponseInterface
     {

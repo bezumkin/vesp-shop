@@ -8,8 +8,8 @@ use Vesp\Controllers\ModelGetController;
 
 class Orders extends ModelGetController
 {
-    protected $scope = 'profile';
-    protected $model = Order::class;
+    protected string|array $scope = 'profile';
+    protected string $model = Order::class;
 
     protected function beforeGet(Builder $c): Builder
     {

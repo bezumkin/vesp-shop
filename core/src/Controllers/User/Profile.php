@@ -11,9 +11,9 @@ class Profile extends Controller
 {
     use FileModelController;
 
-    protected $scope = 'profile';
+    protected string|array $scope = 'profile';
     /** @var User $user */
-    protected $user;
+    protected ?\Vesp\Models\User $user;
 
     public $attachments = ['file'];
 

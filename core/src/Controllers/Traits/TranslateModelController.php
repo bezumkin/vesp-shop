@@ -5,7 +5,7 @@ namespace App\Controllers\Traits;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method getProperty(string $string)
+ * @method getProperty(string $string, $default = null)
  */
 trait TranslateModelController
 {

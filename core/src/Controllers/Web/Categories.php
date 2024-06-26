@@ -9,7 +9,7 @@ use Vesp\Controllers\ModelGetController;
 
 class Categories extends ModelGetController
 {
-    protected $model = Category::class;
+    protected string $model = Category::class;
 
     protected function beforeGet(Builder $c): Builder
     {

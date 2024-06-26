@@ -11,8 +11,8 @@ class Users extends ModelController
 {
     use FileModelController;
 
-    protected $scope = 'users';
-    protected $model = User::class;
+    protected string|array $scope = 'users';
+    protected string $model = User::class;
     public $attachments = ['file'];
 
     protected function beforeGet(Builder $c): Builder

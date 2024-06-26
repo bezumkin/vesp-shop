@@ -3,7 +3,6 @@
 namespace App\Controllers\Security;
 
 use App\Models\User;
-use App\Services\Mail;
 use Psr\Http\Message\ResponseInterface;
 use Vesp\Controllers\Controller;
 

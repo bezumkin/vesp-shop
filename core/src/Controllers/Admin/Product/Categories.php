@@ -12,9 +12,9 @@ class Categories extends ModelController
 {
     use ProductPropertyController;
 
-    protected $scope = 'products';
-    protected $model = ProductCategory::class;
-    protected $primaryKey = ['product_id', 'category_id'];
+    protected string|array $scope = 'products';
+    protected string $model = ProductCategory::class;
+    protected string|array $primaryKey = ['product_id', 'category_id'];
 
     protected function beforeCount(Builder $c): Builder
     {

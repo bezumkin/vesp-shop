@@ -10,8 +10,8 @@ use Vesp\Controllers\ModelController;
 class Cart extends ModelController
 {
     /** @var User */
-    protected $user;
-    protected $model = CartModel::class;
+    protected ?\Vesp\Models\User $user;
+    protected string $model = CartModel::class;
 
     public function put(): ResponseInterface
     {

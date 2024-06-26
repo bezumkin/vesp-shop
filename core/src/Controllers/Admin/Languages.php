@@ -8,8 +8,8 @@ use Vesp\Controllers\ModelGetController;
 
 class Languages extends ModelGetController
 {
-    protected $scope = 'profile';
-    protected $model = Language::class;
+    protected string|array $scope = 'profile';
+    protected string $model = Language::class;
 
     protected function beforeCount(Builder $c): Builder
     {

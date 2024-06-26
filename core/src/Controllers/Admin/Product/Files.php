@@ -14,9 +14,9 @@ class Files extends ModelController
 {
     use ProductPropertyController;
 
-    protected $scope = 'products';
-    protected $model = ProductFile::class;
-    protected $primaryKey = ['product_id', 'file_id'];
+    protected string|array $scope = 'products';
+    protected string $model = ProductFile::class;
+    protected string|array $primaryKey = ['product_id', 'file_id'];
 
     protected function beforeGet(Builder $c): Builder
     {

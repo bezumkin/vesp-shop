@@ -11,8 +11,8 @@ use Vesp\Controllers\ModelController;
 
 class Products extends ModelController
 {
-    protected $model = CartProduct::class;
-    protected $primaryKey = ['cart_id', 'product_key'];
+    protected string $model = CartProduct::class;
+    protected string|array $primaryKey = ['cart_id', 'product_key'];
 
     protected ?Cart $cart;
 

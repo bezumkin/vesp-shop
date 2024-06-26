@@ -12,9 +12,9 @@ class Links extends ModelController
 {
     use ProductPropertyController;
 
-    protected $scope = 'products';
-    protected $model = ProductLink::class;
-    protected $primaryKey = ['product_id', 'link_id'];
+    protected string|array $scope = 'products';
+    protected string $model = ProductLink::class;
+    protected string|array $primaryKey = ['product_id', 'link_id'];
 
     protected function beforeCount(Builder $c): Builder
     {

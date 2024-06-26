@@ -12,7 +12,7 @@ use Vesp\Controllers\ModelGetController;
 
 class Products extends ModelGetController
 {
-    protected $model = Product::class;
+    protected string $model = Product::class;
 
     protected function beforeGet(Builder $c): Builder
     {

@@ -12,8 +12,8 @@ use Vesp\Controllers\ModelController;
 
 class Orders extends ModelController
 {
-    protected $scope = 'orders';
-    protected $model = Order::class;
+    protected string|array $scope = 'orders';
+    protected string $model = Order::class;
 
     protected function beforeGet(Builder $c): Builder
     {

@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Web;
 
-use App\Controllers\Traits\WebCategoryPropertyController;
 use App\Services\CategoryFilter;
 use Psr\Http\Message\ResponseInterface;
 use Vesp\Controllers\Controller;
